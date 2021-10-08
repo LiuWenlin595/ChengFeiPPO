@@ -13,7 +13,15 @@ else:
 env_name = "1v1"
 env_path = "F:\\hit刘文林\\A项目\\成飞\\Project\\skln_working\\dev_asnb_1v1_r4.bat"
 env_proc = ""
-state_dim = 9  # 状态空间维度
+state_dim = 25  # 状态空间维度
+min_max = [[-1] * 2 for _ in range(state_dim)]  # 用来存所有state的min值和max值
+min_max[0] = min_max[11] = min_max[14] = [36.5, 37.5]
+min_max[1] = min_max[12] = min_max[15] = [-121, -122]
+min_max[2] = min_max[13] = min_max[16] = [5000, 6000]
+min_max[3] = min_max[4] = min_max[5] = min_max[17] = min_max[18] = min_max[19] = [0, 360]
+min_max[6] = min_max[7] = min_max[8] = min_max[20] = min_max[21] = min_max[22] = min_max[24] = [0, 250]
+min_max[9] = min_max[10] = [0, 1]
+# TODO min_max[23] = ? 
 action_dim = 1  # 动作空间维度
 has_continuous_action_space = True  # 连续动作为True否则False
 

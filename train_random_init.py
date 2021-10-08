@@ -22,47 +22,13 @@ def obs_postprocess(raw_obs, mean_obs, std_obs):
 
 
 # state的Z-zero归一化
-def norm_state(state):
-    '''
-    0   自己纬度    -120    -121
-    1   自己经度    
-    2   自己高度
-    3   自己翻滚角
-    4   自己俯仰角
-    5   自己偏航角
-    6   自己南北速度
-    7   自己东西速度
-    8   自己上下速度
-    ADD
-    9   自己的武器数量
-    ### 自己的导弹信息无法获取
-    10  雷达信息 (常开)
-    11  目标点纬度
-    12  目标点经度
-    13  目标点高度
-    14  敌人纬度
-    15  敌人经度
-    16  敌人高度
-    17  敌人翻滚角 
-    18  敌人俯仰角
-    19  敌人偏航角
-    20  敌人南北速度
-    21  敌人东西速度
-    22  敌人上下速度
-    23  导弹距离
-    24  导弹方向
-
-    '''
-    # TODO  打印state的维度, 然后重新创建个变量, 将raw和norm区分开, 区分了之后recv_step就可以传state了
-    min_max = [[-1] * 2 for _ in range(state_dim)]  # 用来存所有state的min值和max值
-    min_max[0] = [-120, -121]
-    min_max[1] = [37, 40]
-    min_max[2] = [2000, 6000]
-    min_max[3] = min_max[4] = min_max[5] = [0, 360]
-    min_max[6] = min_max[7] = min_max[8] = [0, 10]
-
+def normalize_state(state):
+    norm_state = np.zeros(state_dim)
     for i in range(state_dim):
-        state[i] = (state[i] - min_max[0]) / (min_max[1] - min_max[0])
+        if state[i] == -1:  # 缺省值暂时设置为-1, 所以不需要做norm
+            continue
+        norm_state[i] = (state[i] - min_max[0]) / (min_max[1] - min_max[0])
+    return norm_state
 
 
 def update_linear_schedule(optimizer, timesteps, total_timesteps):
@@ -141,24 +107,22 @@ def train():
         env_proc = reset(env_proc)  # 双端测试时注释掉
         client.send_reset()
         state = client.poll_reset()
-        pre_angle = state[5]
         current_ep_reward = 0
         # print(datetime.now().replace(microsecond=0) - start_time)
 
-        for _ in range(max_ep_len):
+        for t in range(max_ep_len):
             time_step += 1
             # 环境交互
             action_send = np.zeros(3)
             action_send[2] = state[2]
-            cur_angle = state[5]
-            norm_state(state)
+            norm_state = normalize_state(state)
 
-            action, logprob, state_value = ppo_agent.select_action(state)
-            # TODO 这里查一下action的shape, 能不能放进buffer里
-            angle = (state[5] * 360.0 + action[0] * 30) / 180.0 * math.pi
+            action, logprob, state_value = ppo_agent.select_action(norm_state)
+            # action.shape = (1,)
+            angle = ((state[5] + action[0] * 30) % 360) / 180.0 * math.pi
             action_send[0], action_send[1] = math.cos(angle), math.sin(angle)
             client.send_action(action_send)
-            next_state, reward, done = client.recv_step()
+            next_state, reward, done = client.recv_step(state)
             """trick5, reward clipping"""
             # reward = np.clip(reward, -5, 5)
             current_ep_reward += reward
@@ -206,7 +170,7 @@ def train():
                 print("Elapsed Time  : ", datetime.now().replace(microsecond=0) - start_time)
                 print("--------------------------------------------------------------------------------------------")
 
-            if done:  # 结束episode
+            if done or t == max_ep_len - 1:  # 结束episode
                 ppo_agent.writer.add_scalar('reward', current_ep_reward, global_step=i_episode)
                 break
 

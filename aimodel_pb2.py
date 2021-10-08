@@ -11,393 +11,456 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+
+
 DESCRIPTOR = _descriptor.FileDescriptor(
-    name='aimodel.proto',
-    package='',
-    syntax='proto3',
-    serialized_options=None,
-    create_key=_descriptor._internal_create_key,
-    serialized_pb=b'\n\raimodel.proto\"\xb2\x03\n\x03\x45nv\x12\x0e\n\x06reward\x18\x01 \x01(\x01\x12\x0c\n\x04\x64one\x18\x02 \x01(\x08\x12\x19\n\x04self\x18\x03 \x01(\x0b\x32\x0b.Env.Entity\x12\x0f\n\x07num_wpn\x18\x04 \x01(\x05\x12\x1b\n\x06missle\x18\x05 \x01(\x0b\x32\x0b.Env.Missle\x12\x1a\n\x05\x65nemy\x18\x06 \x01(\x0b\x32\x0b.Env.Entity\x1a\xf6\x01\n\x06\x45ntity\x12\x1c\n\x03\x64of\x18\x01 \x01(\x0b\x32\x0f.Env.Entity.Dof\x12#\n\x03vel\x18\x02 \x01(\x0b\x32\x16.Env.Entity.Velocity3D\x12\n\n\x02id\x18\x03 \x01(\x05\x1aX\n\x03\x44of\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\x12\x0b\n\x03phi\x18\x04 \x01(\x01\x12\r\n\x05theta\x18\x05 \x01(\x01\x12\x0b\n\x03psi\x18\x06 \x01(\x01\x1a\x43\n\nVelocity3D\x12\x11\n\tvel_north\x18\x01 \x01(\x01\x12\x10\n\x08vel_east\x18\x02 \x01(\x01\x12\x10\n\x08vel_down\x18\x03 \x01(\x01\x1a/\n\x06Missle\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x64ist\x18\x02 \x01(\x01\x12\x0b\n\x03\x64ir\x18\x03 \x01(\x01\"\xae\x01\n\x06\x41\x63tion\x12\x0f\n\x07isReset\x18\x01 \x01(\x08\x12 \n\x05point\x18\x02 \x01(\x0b\x32\x11.Action.TrajPoint\x12\x0e\n\x06\x64\x65ploy\x18\x03 \x01(\x08\x12\x11\n\ttarget_id\x18\x04 \x01(\x05\x1aN\n\tTrajPoint\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\t\n\x01h\x18\x03 \x01(\x01\x12\x0b\n\x03vel\x18\x04 \x01(\x01\x12\x0f\n\x07ref_phi\x18\x05 \x01(\x01\x62\x06proto3'
+  name='aimodel.proto',
+  package='',
+  syntax='proto3',
+  serialized_options=None,
+  create_key=_descriptor._internal_create_key,
+  serialized_pb=b'\n\raimodel.proto\"\x98\x04\n\x03\x45nv\x12\x11\n\tred_crash\x18\x01 \x01(\x08\x12\x12\n\nblue_crash\x18\x02 \x01(\x08\x12\x10\n\x08radar_on\x18\x03 \x01(\x08\x12\x19\n\x04self\x18\x04 \x01(\x0b\x32\x0b.Env.Entity\x12\x0f\n\x07num_wpn\x18\x05 \x01(\x05\x12\x17\n\x04goal\x18\x06 \x01(\x0b\x32\t.Env.Goal\x12\x1a\n\x05\x65nemy\x18\x07 \x01(\x0b\x32\x0b.Env.Entity\x12\x1b\n\x06missle\x18\x08 \x01(\x0b\x32\x0b.Env.Missle\x1a\xf6\x01\n\x06\x45ntity\x12\x1c\n\x03\x64of\x18\x01 \x01(\x0b\x32\x0f.Env.Entity.Dof\x12#\n\x03vel\x18\x02 \x01(\x0b\x32\x16.Env.Entity.Velocity3D\x12\n\n\x02id\x18\x03 \x01(\x05\x1aX\n\x03\x44of\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\x12\x0b\n\x03phi\x18\x04 \x01(\x01\x12\r\n\x05theta\x18\x05 \x01(\x01\x12\x0b\n\x03psi\x18\x06 \x01(\x01\x1a\x43\n\nVelocity3D\x12\x11\n\tvel_north\x18\x01 \x01(\x01\x12\x10\n\x08vel_east\x18\x02 \x01(\x01\x12\x10\n\x08vel_down\x18\x03 \x01(\x01\x1a/\n\x06Missle\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x64ist\x18\x02 \x01(\x01\x12\x0b\n\x03\x64ir\x18\x03 \x01(\x01\x1a\x30\n\x04Goal\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\"\xae\x01\n\x06\x41\x63tion\x12\x0f\n\x07isReset\x18\x01 \x01(\x08\x12 \n\x05point\x18\x02 \x01(\x0b\x32\x11.Action.TrajPoint\x12\x0e\n\x06\x64\x65ploy\x18\x03 \x01(\x08\x12\x11\n\ttarget_id\x18\x04 \x01(\x05\x1aN\n\tTrajPoint\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\t\n\x01h\x18\x03 \x01(\x01\x12\x0b\n\x03vel\x18\x04 \x01(\x01\x12\x0f\n\x07ref_phi\x18\x05 \x01(\x01\x62\x06proto3'
 )
+
+
 
 
 _ENV_ENTITY_DOF = _descriptor.Descriptor(
-    name='Dof',
-    full_name='Env.Entity.Dof',
-    filename=None,
-    file=DESCRIPTOR,
-    containing_type=None,
-    create_key=_descriptor._internal_create_key,
-    fields=[
-        _descriptor.FieldDescriptor(
-            name='lat', full_name='Env.Entity.Dof.lat', index=0,
-            number=1, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='lon', full_name='Env.Entity.Dof.lon', index=1,
-            number=2, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='height', full_name='Env.Entity.Dof.height', index=2,
-            number=3, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='phi', full_name='Env.Entity.Dof.phi', index=3,
-            number=4, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='theta', full_name='Env.Entity.Dof.theta', index=4,
-            number=5, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='psi', full_name='Env.Entity.Dof.psi', index=5,
-            number=6, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    ],
-    extensions=[
-    ],
-    nested_types=[],
-    enum_types=[
-    ],
-    serialized_options=None,
-    is_extendable=False,
-    syntax='proto3',
-    extension_ranges=[],
-    oneofs=[
-    ],
-    serialized_start=246,
-    serialized_end=334,
+  name='Dof',
+  full_name='Env.Entity.Dof',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='lat', full_name='Env.Entity.Dof.lat', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='lon', full_name='Env.Entity.Dof.lon', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='height', full_name='Env.Entity.Dof.height', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='phi', full_name='Env.Entity.Dof.phi', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='theta', full_name='Env.Entity.Dof.theta', index=4,
+      number=5, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='psi', full_name='Env.Entity.Dof.psi', index=5,
+      number=6, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=298,
+  serialized_end=386,
 )
 
 _ENV_ENTITY_VELOCITY3D = _descriptor.Descriptor(
-    name='Velocity3D',
-    full_name='Env.Entity.Velocity3D',
-    filename=None,
-    file=DESCRIPTOR,
-    containing_type=None,
-    create_key=_descriptor._internal_create_key,
-    fields=[
-        _descriptor.FieldDescriptor(
-            name='vel_north', full_name='Env.Entity.Velocity3D.vel_north', index=0,
-            number=1, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='vel_east', full_name='Env.Entity.Velocity3D.vel_east', index=1,
-            number=2, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='vel_down', full_name='Env.Entity.Velocity3D.vel_down', index=2,
-            number=3, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    ],
-    extensions=[
-    ],
-    nested_types=[],
-    enum_types=[
-    ],
-    serialized_options=None,
-    is_extendable=False,
-    syntax='proto3',
-    extension_ranges=[],
-    oneofs=[
-    ],
-    serialized_start=336,
-    serialized_end=403,
+  name='Velocity3D',
+  full_name='Env.Entity.Velocity3D',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='vel_north', full_name='Env.Entity.Velocity3D.vel_north', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='vel_east', full_name='Env.Entity.Velocity3D.vel_east', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='vel_down', full_name='Env.Entity.Velocity3D.vel_down', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=388,
+  serialized_end=455,
 )
 
 _ENV_ENTITY = _descriptor.Descriptor(
-    name='Entity',
-    full_name='Env.Entity',
-    filename=None,
-    file=DESCRIPTOR,
-    containing_type=None,
-    create_key=_descriptor._internal_create_key,
-    fields=[
-        _descriptor.FieldDescriptor(
-            name='dof', full_name='Env.Entity.dof', index=0,
-            number=1, type=11, cpp_type=10, label=1,
-            has_default_value=False, default_value=None,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='vel', full_name='Env.Entity.vel', index=1,
-            number=2, type=11, cpp_type=10, label=1,
-            has_default_value=False, default_value=None,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='id', full_name='Env.Entity.id', index=2,
-            number=3, type=5, cpp_type=1, label=1,
-            has_default_value=False, default_value=0,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    ],
-    extensions=[
-    ],
-    nested_types=[_ENV_ENTITY_DOF, _ENV_ENTITY_VELOCITY3D, ],
-    enum_types=[
-    ],
-    serialized_options=None,
-    is_extendable=False,
-    syntax='proto3',
-    extension_ranges=[],
-    oneofs=[
-    ],
-    serialized_start=157,
-    serialized_end=403,
+  name='Entity',
+  full_name='Env.Entity',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='dof', full_name='Env.Entity.dof', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='vel', full_name='Env.Entity.vel', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='id', full_name='Env.Entity.id', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ENV_ENTITY_DOF, _ENV_ENTITY_VELOCITY3D, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=209,
+  serialized_end=455,
 )
 
 _ENV_MISSLE = _descriptor.Descriptor(
-    name='Missle',
-    full_name='Env.Missle',
-    filename=None,
-    file=DESCRIPTOR,
-    containing_type=None,
-    create_key=_descriptor._internal_create_key,
-    fields=[
-        _descriptor.FieldDescriptor(
-            name='id', full_name='Env.Missle.id', index=0,
-            number=1, type=5, cpp_type=1, label=1,
-            has_default_value=False, default_value=0,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='dist', full_name='Env.Missle.dist', index=1,
-            number=2, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='dir', full_name='Env.Missle.dir', index=2,
-            number=3, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    ],
-    extensions=[
-    ],
-    nested_types=[],
-    enum_types=[
-    ],
-    serialized_options=None,
-    is_extendable=False,
-    syntax='proto3',
-    extension_ranges=[],
-    oneofs=[
-    ],
-    serialized_start=405,
-    serialized_end=452,
+  name='Missle',
+  full_name='Env.Missle',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='Env.Missle.id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='dist', full_name='Env.Missle.dist', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='dir', full_name='Env.Missle.dir', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=457,
+  serialized_end=504,
+)
+
+_ENV_GOAL = _descriptor.Descriptor(
+  name='Goal',
+  full_name='Env.Goal',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='lat', full_name='Env.Goal.lat', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='lon', full_name='Env.Goal.lon', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='height', full_name='Env.Goal.height', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=506,
+  serialized_end=554,
 )
 
 _ENV = _descriptor.Descriptor(
-    name='Env',
-    full_name='Env',
-    filename=None,
-    file=DESCRIPTOR,
-    containing_type=None,
-    create_key=_descriptor._internal_create_key,
-    fields=[
-        _descriptor.FieldDescriptor(
-            name='reward', full_name='Env.reward', index=0,
-            number=1, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='done', full_name='Env.done', index=1,
-            number=2, type=8, cpp_type=7, label=1,
-            has_default_value=False, default_value=False,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='self', full_name='Env.self', index=2,
-            number=3, type=11, cpp_type=10, label=1,
-            has_default_value=False, default_value=None,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='num_wpn', full_name='Env.num_wpn', index=3,
-            number=4, type=5, cpp_type=1, label=1,
-            has_default_value=False, default_value=0,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='missle', full_name='Env.missle', index=4,
-            number=5, type=11, cpp_type=10, label=1,
-            has_default_value=False, default_value=None,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='enemy', full_name='Env.enemy', index=5,
-            number=6, type=11, cpp_type=10, label=1,
-            has_default_value=False, default_value=None,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    ],
-    extensions=[
-    ],
-    nested_types=[_ENV_ENTITY, _ENV_MISSLE, ],
-    enum_types=[
-    ],
-    serialized_options=None,
-    is_extendable=False,
-    syntax='proto3',
-    extension_ranges=[],
-    oneofs=[
-    ],
-    serialized_start=18,
-    serialized_end=452,
+  name='Env',
+  full_name='Env',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='red_crash', full_name='Env.red_crash', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='blue_crash', full_name='Env.blue_crash', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='radar_on', full_name='Env.radar_on', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='self', full_name='Env.self', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='num_wpn', full_name='Env.num_wpn', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='goal', full_name='Env.goal', index=5,
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='enemy', full_name='Env.enemy', index=6,
+      number=7, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='missle', full_name='Env.missle', index=7,
+      number=8, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ENV_ENTITY, _ENV_MISSLE, _ENV_GOAL, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18,
+  serialized_end=554,
 )
 
 
 _ACTION_TRAJPOINT = _descriptor.Descriptor(
-    name='TrajPoint',
-    full_name='Action.TrajPoint',
-    filename=None,
-    file=DESCRIPTOR,
-    containing_type=None,
-    create_key=_descriptor._internal_create_key,
-    fields=[
-        _descriptor.FieldDescriptor(
-            name='lat', full_name='Action.TrajPoint.lat', index=0,
-            number=1, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='lon', full_name='Action.TrajPoint.lon', index=1,
-            number=2, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='h', full_name='Action.TrajPoint.h', index=2,
-            number=3, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='vel', full_name='Action.TrajPoint.vel', index=3,
-            number=4, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='ref_phi', full_name='Action.TrajPoint.ref_phi', index=4,
-            number=5, type=1, cpp_type=5, label=1,
-            has_default_value=False, default_value=float(0),
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    ],
-    extensions=[
-    ],
-    nested_types=[],
-    enum_types=[
-    ],
-    serialized_options=None,
-    is_extendable=False,
-    syntax='proto3',
-    extension_ranges=[],
-    oneofs=[
-    ],
-    serialized_start=551,
-    serialized_end=629,
+  name='TrajPoint',
+  full_name='Action.TrajPoint',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='lat', full_name='Action.TrajPoint.lat', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='lon', full_name='Action.TrajPoint.lon', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='h', full_name='Action.TrajPoint.h', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='vel', full_name='Action.TrajPoint.vel', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ref_phi', full_name='Action.TrajPoint.ref_phi', index=4,
+      number=5, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=653,
+  serialized_end=731,
 )
 
 _ACTION = _descriptor.Descriptor(
-    name='Action',
-    full_name='Action',
-    filename=None,
-    file=DESCRIPTOR,
-    containing_type=None,
-    create_key=_descriptor._internal_create_key,
-    fields=[
-        _descriptor.FieldDescriptor(
-            name='isReset', full_name='Action.isReset', index=0,
-            number=1, type=8, cpp_type=7, label=1,
-            has_default_value=False, default_value=False,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='point', full_name='Action.point', index=1,
-            number=2, type=11, cpp_type=10, label=1,
-            has_default_value=False, default_value=None,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='deploy', full_name='Action.deploy', index=2,
-            number=3, type=8, cpp_type=7, label=1,
-            has_default_value=False, default_value=False,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-        _descriptor.FieldDescriptor(
-            name='target_id', full_name='Action.target_id', index=3,
-            number=4, type=5, cpp_type=1, label=1,
-            has_default_value=False, default_value=0,
-            message_type=None, enum_type=None, containing_type=None,
-            is_extension=False, extension_scope=None,
-            serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    ],
-    extensions=[
-    ],
-    nested_types=[_ACTION_TRAJPOINT, ],
-    enum_types=[
-    ],
-    serialized_options=None,
-    is_extendable=False,
-    syntax='proto3',
-    extension_ranges=[],
-    oneofs=[
-    ],
-    serialized_start=455,
-    serialized_end=629,
+  name='Action',
+  full_name='Action',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='isReset', full_name='Action.isReset', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='point', full_name='Action.point', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='deploy', full_name='Action.deploy', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='target_id', full_name='Action.target_id', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ACTION_TRAJPOINT, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=557,
+  serialized_end=731,
 )
 
 _ENV_ENTITY_DOF.containing_type = _ENV_ENTITY
@@ -406,9 +469,11 @@ _ENV_ENTITY.fields_by_name['dof'].message_type = _ENV_ENTITY_DOF
 _ENV_ENTITY.fields_by_name['vel'].message_type = _ENV_ENTITY_VELOCITY3D
 _ENV_ENTITY.containing_type = _ENV
 _ENV_MISSLE.containing_type = _ENV
+_ENV_GOAL.containing_type = _ENV
 _ENV.fields_by_name['self'].message_type = _ENV_ENTITY
-_ENV.fields_by_name['missle'].message_type = _ENV_MISSLE
+_ENV.fields_by_name['goal'].message_type = _ENV_GOAL
 _ENV.fields_by_name['enemy'].message_type = _ENV_ENTITY
+_ENV.fields_by_name['missle'].message_type = _ENV_MISSLE
 _ACTION_TRAJPOINT.containing_type = _ACTION
 _ACTION.fields_by_name['point'].message_type = _ACTION_TRAJPOINT
 DESCRIPTOR.message_types_by_name['Env'] = _ENV
@@ -417,50 +482,63 @@ _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Env = _reflection.GeneratedProtocolMessageType('Env', (_message.Message,), {
 
-    'Entity': _reflection.GeneratedProtocolMessageType('Entity', (_message.Message,), {
+  'Entity' : _reflection.GeneratedProtocolMessageType('Entity', (_message.Message,), {
 
-        'Dof': _reflection.GeneratedProtocolMessageType('Dof', (_message.Message,), {
-            'DESCRIPTOR': _ENV_ENTITY_DOF,
-            '__module__': 'aimodel_pb2'
-            # @@protoc_insertion_point(class_scope:Env.Entity.Dof)
-        }),
+    'Dof' : _reflection.GeneratedProtocolMessageType('Dof', (_message.Message,), {
+      'DESCRIPTOR' : _ENV_ENTITY_DOF,
+      '__module__' : 'aimodel_pb2'
+      # @@protoc_insertion_point(class_scope:Env.Entity.Dof)
+      })
+    ,
 
-        'Velocity3D': _reflection.GeneratedProtocolMessageType('Velocity3D', (_message.Message,), {
-            'DESCRIPTOR': _ENV_ENTITY_VELOCITY3D,
-            '__module__': 'aimodel_pb2'
-            # @@protoc_insertion_point(class_scope:Env.Entity.Velocity3D)
-        }),
-        'DESCRIPTOR': _ENV_ENTITY,
-        '__module__': 'aimodel_pb2'
-        # @@protoc_insertion_point(class_scope:Env.Entity)
-    }),
+    'Velocity3D' : _reflection.GeneratedProtocolMessageType('Velocity3D', (_message.Message,), {
+      'DESCRIPTOR' : _ENV_ENTITY_VELOCITY3D,
+      '__module__' : 'aimodel_pb2'
+      # @@protoc_insertion_point(class_scope:Env.Entity.Velocity3D)
+      })
+    ,
+    'DESCRIPTOR' : _ENV_ENTITY,
+    '__module__' : 'aimodel_pb2'
+    # @@protoc_insertion_point(class_scope:Env.Entity)
+    })
+  ,
 
-    'Missle': _reflection.GeneratedProtocolMessageType('Missle', (_message.Message,), {
-        'DESCRIPTOR': _ENV_MISSLE,
-        '__module__': 'aimodel_pb2'
-        # @@protoc_insertion_point(class_scope:Env.Missle)
-    }),
-    'DESCRIPTOR': _ENV,
-    '__module__': 'aimodel_pb2'
-    # @@protoc_insertion_point(class_scope:Env)
-})
+  'Missle' : _reflection.GeneratedProtocolMessageType('Missle', (_message.Message,), {
+    'DESCRIPTOR' : _ENV_MISSLE,
+    '__module__' : 'aimodel_pb2'
+    # @@protoc_insertion_point(class_scope:Env.Missle)
+    })
+  ,
+
+  'Goal' : _reflection.GeneratedProtocolMessageType('Goal', (_message.Message,), {
+    'DESCRIPTOR' : _ENV_GOAL,
+    '__module__' : 'aimodel_pb2'
+    # @@protoc_insertion_point(class_scope:Env.Goal)
+    })
+  ,
+  'DESCRIPTOR' : _ENV,
+  '__module__' : 'aimodel_pb2'
+  # @@protoc_insertion_point(class_scope:Env)
+  })
 _sym_db.RegisterMessage(Env)
 _sym_db.RegisterMessage(Env.Entity)
 _sym_db.RegisterMessage(Env.Entity.Dof)
 _sym_db.RegisterMessage(Env.Entity.Velocity3D)
 _sym_db.RegisterMessage(Env.Missle)
+_sym_db.RegisterMessage(Env.Goal)
 
 Action = _reflection.GeneratedProtocolMessageType('Action', (_message.Message,), {
 
-    'TrajPoint': _reflection.GeneratedProtocolMessageType('TrajPoint', (_message.Message,), {
-        'DESCRIPTOR': _ACTION_TRAJPOINT,
-        '__module__': 'aimodel_pb2'
-        # @@protoc_insertion_point(class_scope:Action.TrajPoint)
-    }),
-    'DESCRIPTOR': _ACTION,
-    '__module__': 'aimodel_pb2'
-    # @@protoc_insertion_point(class_scope:Action)
-})
+  'TrajPoint' : _reflection.GeneratedProtocolMessageType('TrajPoint', (_message.Message,), {
+    'DESCRIPTOR' : _ACTION_TRAJPOINT,
+    '__module__' : 'aimodel_pb2'
+    # @@protoc_insertion_point(class_scope:Action.TrajPoint)
+    })
+  ,
+  'DESCRIPTOR' : _ACTION,
+  '__module__' : 'aimodel_pb2'
+  # @@protoc_insertion_point(class_scope:Action)
+  })
 _sym_db.RegisterMessage(Action)
 _sym_db.RegisterMessage(Action.TrajPoint)
 
