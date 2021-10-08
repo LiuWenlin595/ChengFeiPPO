@@ -21,7 +21,7 @@ min_max[2] = min_max[13] = min_max[16] = [5000, 6000]
 min_max[3] = min_max[4] = min_max[5] = min_max[17] = min_max[18] = min_max[19] = [0, 360]
 min_max[6] = min_max[7] = min_max[8] = min_max[20] = min_max[21] = min_max[22] = min_max[24] = [0, 250]
 min_max[9] = min_max[10] = [0, 1]
-# TODO min_max[23] = ? 
+min_max[23] = [0, 5000]
 action_dim = 1  # 动作空间维度
 has_continuous_action_space = True  # 连续动作为True否则False
 

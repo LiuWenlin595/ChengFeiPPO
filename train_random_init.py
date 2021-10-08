@@ -27,7 +27,10 @@ def normalize_state(state):
     for i in range(state_dim):
         if state[i] == -1:  # 缺省值暂时设置为-1, 所以不需要做norm
             continue
-        norm_state[i] = (state[i] - min_max[0]) / (min_max[1] - min_max[0])
+        # print(i)
+        # print(state[i], min_max[0], min_max[1])
+        # print(state[i].shape)
+        norm_state[i] = (state[i] - min_max[i][0]) / (min_max[i][1] - min_max[i][0])
     return norm_state
 
 
@@ -69,7 +72,7 @@ def train():
 
     # 初始化PPO
     ppo_agent = PPO(state_dim, action_dim)
-    if load_flag:
+    if load_flag and os.path.exists(checkpoint_path):
         print("--------------------------------------------------------------------------------------------")
         print("loading model at : " + checkpoint_path)
         ppo_agent.load(checkpoint_path)
@@ -104,7 +107,7 @@ def train():
             update_linear_schedule(ppo_agent.optimizer, time_step, max_training_timesteps)
 
         # print(datetime.now().replace(microsecond=0) - start_time)
-        env_proc = reset(env_proc)  # 双端测试时注释掉
+        _ = reset(env_proc)  # 双端测试时注释掉
         client.send_reset()
         state = client.poll_reset()
         current_ep_reward = 0
