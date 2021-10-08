@@ -32,12 +32,14 @@ message Env{
 	bool red_crash = 1;
 	bool blue_crash = 2;
 	bool radar_on = 3;
+	bool detect_enemy = 4;
+	bool detect_missle = 5;
 
-	Entity self = 4;
-	int32 num_wpn = 5;
-	Goal goal = 6;
-	Entity enemy = 7;
-	Missle missle = 8;	
+	Entity self = 6;
+	int32 num_wpn = 7;
+	Goal goal = 8;
+	Entity enemy = 9;
+	Missle missle = 10;	
 }
 
 

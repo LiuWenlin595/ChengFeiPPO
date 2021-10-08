@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\raimodel.proto\"\x98\x04\n\x03\x45nv\x12\x11\n\tred_crash\x18\x01 \x01(\x08\x12\x12\n\nblue_crash\x18\x02 \x01(\x08\x12\x10\n\x08radar_on\x18\x03 \x01(\x08\x12\x19\n\x04self\x18\x04 \x01(\x0b\x32\x0b.Env.Entity\x12\x0f\n\x07num_wpn\x18\x05 \x01(\x05\x12\x17\n\x04goal\x18\x06 \x01(\x0b\x32\t.Env.Goal\x12\x1a\n\x05\x65nemy\x18\x07 \x01(\x0b\x32\x0b.Env.Entity\x12\x1b\n\x06missle\x18\x08 \x01(\x0b\x32\x0b.Env.Missle\x1a\xf6\x01\n\x06\x45ntity\x12\x1c\n\x03\x64of\x18\x01 \x01(\x0b\x32\x0f.Env.Entity.Dof\x12#\n\x03vel\x18\x02 \x01(\x0b\x32\x16.Env.Entity.Velocity3D\x12\n\n\x02id\x18\x03 \x01(\x05\x1aX\n\x03\x44of\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\x12\x0b\n\x03phi\x18\x04 \x01(\x01\x12\r\n\x05theta\x18\x05 \x01(\x01\x12\x0b\n\x03psi\x18\x06 \x01(\x01\x1a\x43\n\nVelocity3D\x12\x11\n\tvel_north\x18\x01 \x01(\x01\x12\x10\n\x08vel_east\x18\x02 \x01(\x01\x12\x10\n\x08vel_down\x18\x03 \x01(\x01\x1a/\n\x06Missle\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x64ist\x18\x02 \x01(\x01\x12\x0b\n\x03\x64ir\x18\x03 \x01(\x01\x1a\x30\n\x04Goal\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\"\xae\x01\n\x06\x41\x63tion\x12\x0f\n\x07isReset\x18\x01 \x01(\x08\x12 \n\x05point\x18\x02 \x01(\x0b\x32\x11.Action.TrajPoint\x12\x0e\n\x06\x64\x65ploy\x18\x03 \x01(\x08\x12\x11\n\ttarget_id\x18\x04 \x01(\x05\x1aN\n\tTrajPoint\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\t\n\x01h\x18\x03 \x01(\x01\x12\x0b\n\x03vel\x18\x04 \x01(\x01\x12\x0f\n\x07ref_phi\x18\x05 \x01(\x01\x62\x06proto3'
+  serialized_pb=b'\n\raimodel.proto\"\xc5\x04\n\x03\x45nv\x12\x11\n\tred_crash\x18\x01 \x01(\x08\x12\x12\n\nblue_crash\x18\x02 \x01(\x08\x12\x10\n\x08radar_on\x18\x03 \x01(\x08\x12\x14\n\x0c\x64\x65tect_enemy\x18\x04 \x01(\x08\x12\x15\n\rdetect_missle\x18\x05 \x01(\x08\x12\x19\n\x04self\x18\x06 \x01(\x0b\x32\x0b.Env.Entity\x12\x0f\n\x07num_wpn\x18\x07 \x01(\x05\x12\x17\n\x04goal\x18\x08 \x01(\x0b\x32\t.Env.Goal\x12\x1a\n\x05\x65nemy\x18\t \x01(\x0b\x32\x0b.Env.Entity\x12\x1b\n\x06missle\x18\n \x01(\x0b\x32\x0b.Env.Missle\x1a\xf6\x01\n\x06\x45ntity\x12\x1c\n\x03\x64of\x18\x01 \x01(\x0b\x32\x0f.Env.Entity.Dof\x12#\n\x03vel\x18\x02 \x01(\x0b\x32\x16.Env.Entity.Velocity3D\x12\n\n\x02id\x18\x03 \x01(\x05\x1aX\n\x03\x44of\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\x12\x0b\n\x03phi\x18\x04 \x01(\x01\x12\r\n\x05theta\x18\x05 \x01(\x01\x12\x0b\n\x03psi\x18\x06 \x01(\x01\x1a\x43\n\nVelocity3D\x12\x11\n\tvel_north\x18\x01 \x01(\x01\x12\x10\n\x08vel_east\x18\x02 \x01(\x01\x12\x10\n\x08vel_down\x18\x03 \x01(\x01\x1a/\n\x06Missle\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x64ist\x18\x02 \x01(\x01\x12\x0b\n\x03\x64ir\x18\x03 \x01(\x01\x1a\x30\n\x04Goal\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\"\xae\x01\n\x06\x41\x63tion\x12\x0f\n\x07isReset\x18\x01 \x01(\x08\x12 \n\x05point\x18\x02 \x01(\x0b\x32\x11.Action.TrajPoint\x12\x0e\n\x06\x64\x65ploy\x18\x03 \x01(\x08\x12\x11\n\ttarget_id\x18\x04 \x01(\x05\x1aN\n\tTrajPoint\x12\x0b\n\x03lat\x18\x01 \x01(\x01\x12\x0b\n\x03lon\x18\x02 \x01(\x01\x12\t\n\x01h\x18\x03 \x01(\x01\x12\x0b\n\x03vel\x18\x04 \x01(\x01\x12\x0f\n\x07ref_phi\x18\x05 \x01(\x01\x62\x06proto3'
 )
 
 
@@ -87,8 +87,8 @@ _ENV_ENTITY_DOF = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=298,
-  serialized_end=386,
+  serialized_start=343,
+  serialized_end=431,
 )
 
 _ENV_ENTITY_VELOCITY3D = _descriptor.Descriptor(
@@ -132,8 +132,8 @@ _ENV_ENTITY_VELOCITY3D = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=388,
-  serialized_end=455,
+  serialized_start=433,
+  serialized_end=500,
 )
 
 _ENV_ENTITY = _descriptor.Descriptor(
@@ -177,8 +177,8 @@ _ENV_ENTITY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=209,
-  serialized_end=455,
+  serialized_start=254,
+  serialized_end=500,
 )
 
 _ENV_MISSLE = _descriptor.Descriptor(
@@ -222,8 +222,8 @@ _ENV_MISSLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=457,
-  serialized_end=504,
+  serialized_start=502,
+  serialized_end=549,
 )
 
 _ENV_GOAL = _descriptor.Descriptor(
@@ -267,8 +267,8 @@ _ENV_GOAL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=506,
-  serialized_end=554,
+  serialized_start=551,
+  serialized_end=599,
 )
 
 _ENV = _descriptor.Descriptor(
@@ -301,36 +301,50 @@ _ENV = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='self', full_name='Env.self', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      name='detect_enemy', full_name='Env.detect_enemy', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='num_wpn', full_name='Env.num_wpn', index=4,
-      number=5, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      name='detect_missle', full_name='Env.detect_missle', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='goal', full_name='Env.goal', index=5,
+      name='self', full_name='Env.self', index=5,
       number=6, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='enemy', full_name='Env.enemy', index=6,
-      number=7, type=11, cpp_type=10, label=1,
+      name='num_wpn', full_name='Env.num_wpn', index=6,
+      number=7, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='goal', full_name='Env.goal', index=7,
+      number=8, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='missle', full_name='Env.missle', index=7,
-      number=8, type=11, cpp_type=10, label=1,
+      name='enemy', full_name='Env.enemy', index=8,
+      number=9, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='missle', full_name='Env.missle', index=9,
+      number=10, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -348,7 +362,7 @@ _ENV = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=18,
-  serialized_end=554,
+  serialized_end=599,
 )
 
 
@@ -407,8 +421,8 @@ _ACTION_TRAJPOINT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=653,
-  serialized_end=731,
+  serialized_start=698,
+  serialized_end=776,
 )
 
 _ACTION = _descriptor.Descriptor(
@@ -459,8 +473,8 @@ _ACTION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=557,
-  serialized_end=731,
+  serialized_start=602,
+  serialized_end=776,
 )
 
 _ENV_ENTITY_DOF.containing_type = _ENV_ENTITY

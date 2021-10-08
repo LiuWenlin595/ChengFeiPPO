@@ -12,7 +12,6 @@ else:
 """-------------------------环境超参数-------------------------"""
 env_name = "1v1"
 env_path = "F:\\hit刘文林\\A项目\\成飞\\Project\\skln_working\\dev_asnb_1v1_r4.bat"
-env_proc = ""
 state_dim = 25  # 状态空间维度
 min_max = [[-1] * 2 for _ in range(state_dim)]  # 用来存所有state的min值和max值
 min_max[0] = min_max[11] = min_max[14] = [36.5, 37.5]
