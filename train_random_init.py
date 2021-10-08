@@ -62,12 +62,11 @@ if random_seed:
     torch.manual_seed(random_seed)
     np.random.seed(random_seed)
 
-env_proc = ""
-
-
 def train():
     # 打印参数信息
     print_config()
+
+    env_proc = ""
 
     # 初始化PPO
     ppo_agent = PPO(state_dim, action_dim)
@@ -109,6 +108,7 @@ def train():
         env_proc = reset(env_proc)  # 双端测试时注释掉
         client.send_reset()
         state = client.poll_reset()
+        print("xihaxiha", state[0], state[1])
         current_ep_reward = 0
         # print(datetime.now().replace(microsecond=0) - start_time)
 

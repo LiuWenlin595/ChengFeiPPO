@@ -95,6 +95,7 @@ class MyClient:
         '''
 
         state = np.zeros((1, state_dim))
+        print("lat:", msg_env.self.dof.lat)
         state[0][0] = msg_env.self.dof.lat
         state[0][1] = msg_env.self.dof.lon
         state[0][2] = msg_env.self.dof.height
@@ -126,7 +127,6 @@ class MyClient:
             return next_state, 0, 0
         else:
             reward, done = self.get_reward_done(cur_state, next_state, msg_env.red_crash, msg_env.blue_crash)
-            # TODO dist需要打印一下, msg_env的enemy需要打印一下
             return next_state, reward, done
 
     def get_reward_done(self, cur_state, next_state, red_crash, blue_crash):
@@ -137,6 +137,11 @@ class MyClient:
         goal_lat, goal_lon, goal_height = cur_state[11], cur_state[12], cur_state[13]
         cur_dist = math.sqrt(pow(cur_state[0] - goal_lat, 2) + pow(cur_state[1] - goal_lon, 2))  # 乘以一个数量级, 防止dist过小
         next_dist = math.sqrt(pow(next_state[0] - goal_lat, 2) + pow(next_state[1] - goal_lon, 2))  # 乘以一个数量级, 防止dist过小
+        print("haha")
+        print(cur_state[0], cur_state[1], next_state[0], next_state[1])
+        print(goal_lat, goal_lon)
+        print(cur_dist, next_dist, cur_dist - next_dist)
+        print("xixi")
         reward += cur_dist - next_dist
 
         # TODO 根据导弹的范围来设计奖励, 但是导弹并不是全局信息, 所以需要考虑疏忽的情况
@@ -159,10 +164,14 @@ class MyClient:
             reward += 5
 
         # 坠机, 给予一次性大惩罚
-        delta_theta = (next_state[4] - cur_state[4] + 360) % 360
-        delta_psi = (next_state[5] - cur_state[5] + 360) % 360
+        delta_theta = abs(next_state[4] - cur_state[4])
+        if delta_theta > 180:
+            delta_theta = 360 - delta_theta
+        delta_psi = abs(next_state[5] - cur_state[5])
+        if delta_psi > 180:
+            delta_psi = 360 - delta_psi
         if delta_theta > 15 or delta_psi > 15:
-            print("crash down! ", delta_theta, delta_psi)
+            print("crash down! ", delta_theta, delta_psi, next_state[4], cur_state[4], next_state[5], cur_state[5])
             reward -= 5
             done = True
         return reward, done
