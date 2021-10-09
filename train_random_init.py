@@ -1,66 +1,14 @@
-import os
 from datetime import datetime
-import torch
-import numpy as np
-from multiprocessing import Process
-import subprocess
-import math
 
 from PPO import PPO
 from client import MyClient
-from config import *
-
-
-def obs_postprocess(raw_obs, mean_obs, std_obs):
-    """trick6, 状态标准化; trick7, observation clipping"""
-    """这个不实现, 因为每个环境的状态维度都不一样, 但是原理就是正规化, 即x = (x - x_mean) / x_std"""
-    # 这里是数组操作, 因为不同特征的取值范围都不一样, 比如坐标是0-100, 伤害是0-10, 所以坐标和伤害的正规化要各自计算
-    # new_obs = (raw_obs - mean_obs) / std_obs
-    # 然后有一些数据正规化了之后还是过大过小, 需要再做一波clip
-    # new_obs = np.clip(new_obs, -10, 10)
-    raise NotImplementedError
-
-
-# state的Z-zero归一化
-def normalize_state(state):
-    norm_state = np.zeros(state_dim)
-    for i in range(state_dim):
-        if state[i] == -1:  # 缺省值暂时设置为-1, 所以不需要做norm
-            continue
-        norm_state[i] = (state[i] - min_max[i][0]) / (min_max[i][1] - min_max[i][0])
-    return norm_state
-
-
-def update_linear_schedule(optimizer, timesteps, total_timesteps):
-    """负责控制actor和critic学习率的线性衰减, 衰减力度都可以通过公式调"""
-    ratio = 1 - timesteps / float(total_timesteps)
-    for param_group in optimizer.param_groups:
-        param_group['lr'] *= ratio
-
-
-def env_run():  # 注意！路径写死！
-    p = subprocess.Popen(env_path, shell=True, stdout=subprocess.PIPE)
-    p.communicate()
-
-
-def env_close(old_env_proc):  # old_client
-    subprocess.call("taskkill /F /T /PID {}".format(old_env_proc.pid))
-    old_env_proc.terminate()
-    # TODO 结束已有的client连接
-
-
-def reset(old_env_proc):
-    if old_env_proc != '':
-        env_close(old_env_proc)
-    p = Process(target=env_run, name='env_star')
-    p.start()
-    return p
-
+from common import *
 
 # 设置随机种子
 if random_seed:
     torch.manual_seed(random_seed)
     np.random.seed(random_seed)
+
 
 def train():
     # 打印参数信息

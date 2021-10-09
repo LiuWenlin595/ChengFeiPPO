@@ -11,7 +11,7 @@ else:
     print("Device set to : cpu")
 """-------------------------环境超参数-------------------------"""
 env_name = "1v1"
-env_path = "D:\\Project\\skln_working\\dev_asnb_1v1.bat"
+env_path = "D:\\Project\\skln_working\\dev_asnb_1v1_r4.bat"
 state_dim = 25  # 状态空间维度
 min_max = [[-1] * 2 for _ in range(state_dim)]  # 用来存所有state的min值和max值
 min_max[0] = min_max[11] = min_max[14] = [36.5, 37.5]
@@ -78,43 +78,3 @@ render = True  # 是否render
 frame_delay = 0  # 是否每一帧停顿一些时间, 可以render的更清楚
 total_test_episodes = 10  # 测试轮次
 """-----------------------------------------------------------"""
-
-
-# 打印所有超参数
-def print_config():
-    print("============================================================================================")
-    print("training environment name : " + env_name)
-    print("current logging run number for " + env_name + " : ", run_num)
-    print("logging at : " + log_f_name)
-    print("save checkpoint path : " + checkpoint_path)
-    print("--------------------------------------------------------------------------------------------")
-    print("max training timesteps : ", max_training_timesteps)
-    print("max timesteps per episode : ", max_ep_len)
-    print("model saving frequency : " + str(save_model_freq) + " timesteps")
-    print("log frequency : " + str(log_freq) + " timesteps")
-    print("printing average reward over episodes in last : " + str(print_freq) + " timesteps")
-    print("--------------------------------------------------------------------------------------------")
-    print("state space dimension : ", state_dim)
-    print("action space dimension : ", action_dim)
-    print("--------------------------------------------------------------------------------------------")
-    if has_continuous_action_space:
-        print("Initializing a continuous action space policy")
-        print("--------------------------------------------------------------------------------------------")
-        print("starting std of action distribution : ", action_std)
-        print("decay rate of std of action distribution : ", action_std_decay_rate)
-        print("minimum std of action distribution : ", min_action_std)
-        print("decay frequency of std of action distribution : " + str(action_std_decay_freq) + " timesteps")
-    else:
-        print("Initializing a discrete action space policy")
-    print("--------------------------------------------------------------------------------------------")
-    print("PPO update frequency : " + str(update_timestep) + " timesteps")
-    print("PPO K epochs : ", k_epochs)
-    print("PPO epsilon clip : ", eps_clip)
-    print("discount factor (gamma) : ", gamma)
-    print("--------------------------------------------------------------------------------------------")
-    print("optimizer learning rate actor : ", lr_actor)
-    print("optimizer learning rate critic : ", lr_critic)
-    if random_seed:
-        print("--------------------------------------------------------------------------------------------")
-        print("setting random seed to ", random_seed)
-    print("============================================================================================")
