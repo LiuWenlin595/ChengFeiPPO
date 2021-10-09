@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="deb94db1-3bd8-44bc-91ad-040b8359bd6e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633696886.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633697382.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633697561.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633697809.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633698445.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633698515.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633698667.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633699789.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633699825.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633763869.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633764016.DESKTOP-EG6I707" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_random_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_random_init.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1zGLlkje4drxCDRgZNCkfii0Djk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="deb94db1-3bd8-44bc-91ad-040b8359bd6e" name="Default Changelist" comment="" />
+      <created>1633769633898</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633769633898</updated>
+    </task>
+    <servers />
+  </component>
+</project>

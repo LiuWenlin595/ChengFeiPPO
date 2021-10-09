@@ -25,7 +25,7 @@ action_dim = 1  # 动作空间维度
 has_continuous_action_space = True  # 连续动作为True否则False
 
 max_ep_len = 4000  # 一个episode的最多timesteps
-max_training_timesteps = int(3e6)  # 当 timesteps > max_training_timesteps 时停止循环
+max_training_timesteps = int(3e7)  # 当 timesteps > max_training_timesteps 时停止循环
 
 print_freq = max_ep_len * 10  # 每隔多少个step打印一次 average reward
 log_freq = max_ep_len * 10  # 每隔多少个step将 average reward 保存到日志
@@ -35,7 +35,7 @@ load_flag = True  # 是否接着上一次的checkpoint继续训练
 action_std = 0.3  # Multivariate Normal动作分布的初始标准差
 action_std_decay_rate = 0.05  # 标准差的线性衰减步长 (action_std = action_std - action_std_decay_rate)
 min_action_std = 0.1  # 最小动作标准差, 当 action_std <= min_action_std 时停止衰减
-action_std_decay_freq = int(2.5e5)  # 每隔 action_std_decay_freq 衰减一次
+action_std_decay_freq = int(1e6)  # 每隔 action_std_decay_freq 衰减一次
 
 lr_actor = 0.0003  # actor学习率
 lr_critic = 0.001  # critic学习率
@@ -63,15 +63,15 @@ if not os.path.exists(directory):
 tensorboard_path = directory
 checkpoint_path = directory + "PPO_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
 """-------------------------训练超参数-------------------------"""
-update_timestep = max_ep_len * 4  # 每隔 update_timestep 执行一次 update policy
-k_epochs = 80  # 一个 update policy 中更新k轮
+update_timestep = max_ep_len * 3  # 每隔 update_timestep 执行一次 update policy
+k_epochs = 2  # 一个 update policy 中更新k轮
 
 eps_clip = 0.2  # clip参数
 gamma = 0.99  # 折扣因子
 
 use_gae = True  # 是否使用GAE
 gae_lambda = 0.95  # gae的权重参数
-mini_batch = 16000  # 单批数据的处理量
+mini_batch = 12000  # 单批数据的处理量
 batch_size = 30000  # mempool的容量
 """-------------------------测试超参数-------------------------"""
 render = True  # 是否render

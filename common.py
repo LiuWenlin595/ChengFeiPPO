@@ -7,7 +7,7 @@ from config import *
 
 
 # 计算reward和done
-def get_reward_done(self, cur_state, next_state, red_crash, blue_crash):
+def get_reward_done(cur_state, next_state, red_crash, blue_crash):
     reward, done = 0, False
     # done的情况: 红方被击毁, 蓝方被击毁, 红方到达目标点, 红方坠机, 到达最长时间
 
@@ -55,6 +55,7 @@ def normalize_state(state):
     norm_state = np.zeros(state_dim)
     for i in range(state_dim):
         if state[i] == -1:  # 缺省值暂时设置为-1, 所以不需要做norm
+            norm_state[i] = -1
             continue
         norm_state[i] = (state[i] - min_max[i][0]) / (min_max[i][1] - min_max[i][0])
     return norm_state

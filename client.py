@@ -17,7 +17,6 @@ class MyClient:
         self.socket = self.context.socket(zmq.REQ)
         self.socket.connect("tcp://localhost:5555")
 
-
     def send_reset(self):
         # print(f"Sending request 'reset' ..." )
 
@@ -27,7 +26,6 @@ class MyClient:
         # print(f"Sending request reset:{msg_action.isReset} ...")
 
         self.socket.send(send_msg)
-
 
     # 发送动作信息
     def send_action(self, action):
@@ -97,7 +95,6 @@ class MyClient:
         24  导弹方向
         '''
         state = np.zeros((1, state_dim))
-        print("lat:", msg_env.self.dof.lat)
         state[0][0] = msg_env.self.dof.lat
         state[0][1] = msg_env.self.dof.lon
         state[0][2] = msg_env.self.dof.height
