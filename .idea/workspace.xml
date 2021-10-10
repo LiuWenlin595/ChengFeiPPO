@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="deb94db1-3bd8-44bc-91ad-040b8359bd6e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PPO.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PPO.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/common.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633696886.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633697382.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633697561.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633697809.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633698445.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633698515.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633698667.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633699789.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633699825.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633763869.DESKTOP-EG6I707" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/1v1/events.out.tfevents.1633764016.DESKTOP-EG6I707" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/train_random_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_random_init.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +25,35 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunManager">
+    <configuration name="train_random_init" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PPO" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_random_init.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.train_random_init" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

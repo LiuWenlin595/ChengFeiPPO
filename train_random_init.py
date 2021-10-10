@@ -56,7 +56,7 @@ def train():
         env_proc = reset(env_proc)  # 双端测试时注释掉
         client.send_reset()
         state = client.poll_reset()
-        print("xihaxiha", state)
+        print("origin state: ", state)
         current_ep_reward = 0
         # print(datetime.now().replace(microsecond=0) - start_time)
 

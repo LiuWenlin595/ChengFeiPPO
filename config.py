@@ -15,7 +15,7 @@ env_path = "D:\\Project\\skln_working\\dev_asnb_1v1_r4.bat"
 state_dim = 25  # 状态空间维度
 min_max = [[-1] * 2 for _ in range(state_dim)]  # 用来存所有state的min值和max值
 min_max[0] = min_max[11] = min_max[14] = [36.5, 37.5]
-min_max[1] = min_max[12] = min_max[15] = [-121, -122]
+min_max[1] = min_max[12] = min_max[15] = [-122, -121]
 min_max[2] = min_max[13] = min_max[16] = [5000, 6000]
 min_max[3] = min_max[4] = min_max[5] = min_max[17] = min_max[18] = min_max[19] = [0, 360]
 min_max[6] = min_max[7] = min_max[8] = min_max[20] = min_max[21] = min_max[22] = min_max[24] = [0, 250]

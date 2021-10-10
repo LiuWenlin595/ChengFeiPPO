@@ -19,7 +19,7 @@ def get_reward_done(cur_state, next_state, red_crash, blue_crash):
 
     # TODO 根据导弹的范围来设计奖励, 但是导弹并不是全局信息, 所以需要考虑疏忽的情况
 
-    # 到达目标点给予一次性大奖励
+    # 到达目标点给予一次性大奖励, 如果直接朝目标点飞的话大概一次移动0.00027, 4000步可以走1.08没问题
     if cur_dist < 0.1:
         print("arrive goal!")
         reward += 5
