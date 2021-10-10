@@ -1,10 +1,6 @@
-from torch.nn.modules.module import register_module_backward_hook
 import aimodel_pb2
-import numpy as np
-import math
 import zmq
 
-from config import *
 from common import *
 
 
@@ -55,7 +51,6 @@ class MyClient:
                 count += 1
                 print("no respond {} times, reconnecting".format(count))
                 self.socket.close()
-                print("reconnecting...")
                 self.socket = self.context.socket(zmq.REQ)
                 self.socket.connect("tcp://localhost:5555")
                 self.send_reset()

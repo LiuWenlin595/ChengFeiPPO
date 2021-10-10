@@ -2,13 +2,9 @@ import os
 import torch
 """-------------------------配置超参数-------------------------"""
 device = torch.device('cpu')
-
 if torch.cuda.is_available():
     device = torch.device('cuda:0')
     torch.cuda.empty_cache()
-    print("Device set to : " + str(torch.cuda.get_device_name(device)))
-else:
-    print("Device set to : cpu")
 """-------------------------环境超参数-------------------------"""
 env_name = "1v1"
 env_path = "D:\\Project\\skln_working\\dev_asnb_1v1_r4.bat"
@@ -64,7 +60,7 @@ tensorboard_path = directory
 checkpoint_path = directory + "PPO_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
 """-------------------------训练超参数-------------------------"""
 update_timestep = max_ep_len * 3  # 每隔 update_timestep 执行一次 update policy
-k_epochs = 2  # 一个 update policy 中更新k轮
+k_epochs = 3  # 一个 update policy 中更新k轮
 
 eps_clip = 0.2  # clip参数
 gamma = 0.99  # 折扣因子

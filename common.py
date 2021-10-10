@@ -64,6 +64,10 @@ def normalize_state(state):
 # 打印所有超参数
 def print_config():
     print("============================================================================================")
+    if torch.cuda.is_available():
+        print("Device set to : " + str(torch.cuda.get_device_name(device)))
+    else:
+        print("Device set to : cpu")
     print("training environment name : " + env_name)
     print("current logging run number for " + env_name + " : ", run_num)
     print("logging at : " + log_f_name)

@@ -1,9 +1,4 @@
-from math import log
-import numpy as np
-import torch
 import torch.nn as nn
-from torch.distributions import MultivariateNormal
-from torch.distributions import Categorical
 from tensorboardX import SummaryWriter
 
 from network import ActorCritic
@@ -34,8 +29,8 @@ class PPO:
         self.MSEloss = nn.MSELoss()
 
         self.writer = SummaryWriter(directory)
-        self.num_critic_update_iteration = 0
-        self.num_actor_update_iteration = 0
+        # TODO 把critic和actor分开, 额外训练Ｑ值
+        self.update_iteration = 0
 
     def set_action_std(self, new_action_std):
         if has_continuous_action_space:
@@ -105,6 +100,8 @@ class PPO:
             surr2 = torch.clamp(ratios, 1 - eps_clip, 1 + eps_clip) * advantages
             actor_loss = -torch.min(surr1, surr2)
             """trick1, value function clipping"""
+            # TODO value_clip的critic_loss也需要改成不求均值的形式, 同时考虑一下要不要改成SGD, 现在是ＭiniBatch
+
             if use_value_clip:
                 # 0.5就相当于epsilon, 是我瞎写的, 需要根据实际任务而定
                 _, old_state_values, _ = self.policy_old.evaluate(old_states, old_actions)
@@ -112,12 +109,15 @@ class PPO:
                 value_clip = old_state_values + torch.clamp(state_values - old_state_values, -0.5, 0.5)
                 critic_loss = torch.min(self.MSEloss(state_values, returns), self.MSEloss(value_clip, returns))
             else:
-                critic_loss = self.MSEloss(state_values, returns)
+                critic_loss = (state_values - returns).pow(2)
 
+            # TODO entropy没有grad是不是有问题
             # 总的loss = actor loss + critic loss + entropy loss
             loss = actor_loss + critic_coef * critic_loss - entropy_coef * entropy
-            self.writer.add_scalar('Loss/critic_loss', critic_loss, global_step=self.num_critic_update_iteration)
-            self.writer.add_scalar('Loss/actor_loss', actor_loss, global_step=self.num_actor_update_iteration)
+            self.writer.add_scalar('Loss/critic_loss', critic_loss.mean(), global_step=self.update_iteration)
+            self.writer.add_scalar('Loss/actor_loss', actor_loss.mean(), global_step=self.update_iteration)
+            self.writer.add_scalar('Loss/entropy', entropy.mean(), global_step=self.update_iteration)
+            self.writer.add_scalar('Loss/total_loss', loss.mean(), global_step=self.update_iteration)
 
             # 梯度更新
             self.optimizer.zero_grad()
@@ -127,8 +127,7 @@ class PPO:
             # nn.utils.clip_grad_norm_(self.policy.parameters(), max_grad_norm)
             self.optimizer.step()
 
-            self.num_critic_update_iteration += 1
-            self.num_actor_update_iteration += 1
+            self.update_iteration += 1
 
         # 将新的权重赋值给policy old
         self.policy_old.load_state_dict(self.policy.state_dict())
