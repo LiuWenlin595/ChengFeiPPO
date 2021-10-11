@@ -98,13 +98,13 @@ class MyClient:
         state = np.zeros((1, state_dim))
         state[0][0] = msg_env.self.dof.lat
         state[0][1] = msg_env.self.dof.lon
-        state[0][2] = msg_env.self.dof.height
-        state[0][3] = msg_env.self.dof.phi  # roll, 翻滚角
-        state[0][4] = msg_env.self.dof.theta  # pitch, 俯仰角
+        state[0][2] = 5500  # msg_env.self.dof.height, 因为传输数据和观战不符, 所以先给高度一个固定值
+        state[0][3] = 0     # msg_env.self.dof.phi  # roll, 翻滚角
+        state[0][4] = 0     # msg_env.self.dof.theta  # pitch, 俯仰角
         state[0][5] = msg_env.self.dof.psi  # yaw, 偏航角
         state[0][6] = msg_env.self.vel.vel_north
         state[0][7] = msg_env.self.vel.vel_east
-        state[0][8] = msg_env.self.vel.vel_down
+        state[0][8] = 0     # msg_env.self.vel.vel_down
         state[0][9] = 1  # msg_env.num_wpn  # TODO 想一想这里是设计成bool还是int, 暂时先空着因为没有attack
         state[0][10] = msg_env.radar_on
         state[0][11] = msg_env.goal.lat

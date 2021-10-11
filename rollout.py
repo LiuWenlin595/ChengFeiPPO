@@ -4,7 +4,7 @@ from config import *
 
 
 class RolloutBuffer:
-    def __init__(self, mini_batch, batch_size):
+    def __init__(self):
         self.mini_batch = mini_batch  # 每次训练取出的数据量
         self.batch_size = batch_size  # PPO buffer总的数据存储大小
         self.cur_size = 0  # 当前buffer里的数据量

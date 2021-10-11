@@ -7,12 +7,12 @@ from config import *
 
 
 class PPO:
-    def __init__(self, state_dim, action_dim):
+    def __init__(self):
 
         if has_continuous_action_space:
             self.action_std = action_std
 
-        self.buffer = RolloutBuffer(mini_batch, batch_size)
+        self.buffer = RolloutBuffer()
 
         # 需要用到两个网络, 因为策略比
         self.policy = ActorCritic(state_dim, action_dim).to(device)
@@ -68,8 +68,72 @@ class PPO:
         else:
             return action.item(), action_logprob, state_value
 
-    # 更新模型
-    def update(self):
+    # 通过sgd来更新模型, 一帧对应一次更新, k_epochs控制每一帧的重复利用率
+    def update_sgd(self):
+        if use_gae:
+            returns, actions, logprobs, states = self.calc_gae_return()
+        else:
+            returns, actions, logprobs, states = self.calc_lambda_return()
+        """trick2, reward normalizing"""
+        returns = torch.tensor(returns, dtype=torch.float32).to(device)
+        # returns = (returns - returns.mean()) / (returns.std() + 1e-7)  # TODO, 改成running reward, 而且好像应该是给reward做norm而不是return
+
+        # list 转 tensor
+        old_actions = torch.squeeze(torch.stack(actions, dim=0)).detach().to(device)
+        old_logprobs = torch.squeeze(torch.stack(logprobs, dim=0)).detach().to(device)
+        old_states = torch.squeeze(torch.stack(states, dim=0)).detach().to(device)
+
+        # 进行k轮update policy
+        for _ in range(k_epochs):
+            for i in range(mini_batch):
+                logprobs, state_values, entropy = self.policy.evaluate(old_states[i], old_actions[i])
+
+                # 处理state_values的张量维度和reward相同
+                state_values = torch.squeeze(state_values)
+
+                # 计算策略比
+                ratios = torch.exp(logprobs - old_logprobs[i].detach())
+
+                # 计算PPO的约束loss
+                advantages = returns[i] - state_values.detach()
+                surr1 = ratios * advantages
+                surr2 = torch.clamp(ratios, 1 - eps_clip, 1 + eps_clip) * advantages
+                actor_loss = -torch.min(surr1, surr2)
+                """trick1, value function clipping"""
+                # TODO value_clip的critic_loss也需要改成不求均值的形式, 同时考虑一下要不要改成SGD, 现在是ＭiniBatch
+
+                if use_value_clip:
+                    # 0.5就相当于epsilon, 是我瞎写的, 需要根据实际任务而定
+                    _, old_state_values, _ = self.policy_old.evaluate(old_states, old_actions)
+                    old_state_values = torch.squeeze(old_state_values)
+                    value_clip = old_state_values + torch.clamp(state_values - old_state_values, -0.5, 0.5)
+                    critic_loss = torch.min(self.MSEloss(state_values, returns), self.MSEloss(value_clip, returns))
+                else:
+                    critic_loss = (state_values - returns[i]).pow(2)
+
+                # TODO entropy没有grad是不是有问题
+                # 总的loss = actor loss + critic loss + entropy loss
+                loss = actor_loss + critic_coef * critic_loss - entropy_coef * entropy
+                self.writer.add_scalar('Loss/critic_loss', critic_loss, global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/actor_loss', actor_loss, global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/entropy', entropy, global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/total_loss', loss, global_step=self.update_iteration)
+
+                # 梯度更新
+                self.optimizer.zero_grad()
+                loss.backward()
+                """trick9, global gradient clipping"""
+                # max_grad_norm的值也是我瞎写的
+                # nn.utils.clip_grad_norm_(self.policy.parameters(), max_grad_norm)
+                self.optimizer.step()
+
+                self.update_iteration += 1
+
+        # 将新的权重赋值给policy old
+        self.policy_old.load_state_dict(self.policy.state_dict())
+
+    # 通过整个minibatch求平均来更新模型, 更准但效率低
+    def update_minibatch(self):
         if use_gae:
             returns, actions, logprobs, states = self.calc_gae_return()
         else:
@@ -85,7 +149,6 @@ class PPO:
 
         # 进行k轮update policy
         for _ in range(k_epochs):
-
             logprobs, state_values, entropy = self.policy.evaluate(old_states, old_actions)
 
             # 处理state_values的张量维度和reward相同

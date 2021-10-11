@@ -17,7 +17,7 @@ def train():
     env_proc = ""
 
     # 初始化PPO
-    ppo_agent = PPO(state_dim, action_dim)
+    ppo_agent = PPO()
     if load_flag and os.path.exists(checkpoint_path):
         print("--------------------------------------------------------------------------------------------")
         print("loading model at : " + checkpoint_path)
@@ -56,10 +56,9 @@ def train():
         # print(datetime.now().replace(microsecond=0) - start_time)
         connect_flag = False  # C++和py是否完成通信连接
         while not connect_flag:
-            # env_proc = reset(env_proc)  # 双端测试时注释掉
+            env_proc = reset(env_proc)  # 双端测试时注释掉
             client.send_reset()
             state, connect_flag = client.poll_reset()
-        print("origin state: ", state)
         current_ep_reward = 0
         # print(datetime.now().replace(microsecond=0) - start_time)
 
@@ -85,14 +84,11 @@ def train():
 
             # 更新PPO
             if ppo_agent.buffer.is_full() and time_step % update_timestep == 0:
-                ppo_agent.update()
+                ppo_agent.update_sgd()
 
             # 对于连续动作, 隔段时间降低动作标准差, 保证策略收敛
             if has_continuous_action_space and time_step % action_std_decay_freq == 0:
                 ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
-
-            if time_step % 50 == 0:
-                print(time_step, state)
 
             # log 记录 average reward
             if time_step % log_freq == 0:
@@ -130,9 +126,7 @@ def train():
                 done = Done.time_out.value
             if done:  # 结束episode
                 ppo_agent.writer.add_scalar('reward', current_ep_reward, global_step=i_episode)
-                print("total: ", current_ep_reward, done)
                 done_type[done] += 1
-                print(done_type)
                 break
 
             state = next_state
