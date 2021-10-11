@@ -47,14 +47,20 @@ class MyClient:
             if self.socket in sockets:
                 state, _, _ = self.recv_step(None)
                 break
-            else:
+            elif count < 200:
                 count += 1
                 print("no respond {} times, reconnecting".format(count))
                 self.socket.close()
                 self.socket = self.context.socket(zmq.REQ)
                 self.socket.connect("tcp://localhost:5555")
                 self.send_reset()
-        return state
+            else:
+                print("send too many times, restart connection.")
+                self.socket.close()
+                self.socket = self.context.socket(zmq.REQ)
+                self.socket.connect("tcp://localhost:5555")
+                return None, False
+        return state, True
 
     def recv_step(self, cur_state):
         msg_env = aimodel_pb2.Env()

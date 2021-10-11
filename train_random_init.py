@@ -53,9 +53,11 @@ def train():
             update_linear_schedule(ppo_agent.optimizer, time_step, max_training_timesteps)
 
         # print(datetime.now().replace(microsecond=0) - start_time)
-        env_proc = reset(env_proc)  # 双端测试时注释掉
-        client.send_reset()
-        state = client.poll_reset()
+        connect_flag = False  # C++和py是否完成通信连接
+        while not connect_flag:
+            env_proc = reset(env_proc)  # 双端测试时注释掉
+            client.send_reset()
+            state, connect_flag = client.poll_reset()
         # print("origin state: ", state)
         current_ep_reward = 0
         # print(datetime.now().replace(microsecond=0) - start_time)
