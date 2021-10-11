@@ -2,14 +2,25 @@ import math
 import numpy as np
 from multiprocessing import Process
 import subprocess
+from enum import Enum
 
 from config import *
 
 
+# 对局结束指标
+class Done(Enum):
+    not_done = 0            # 对局继续
+    time_out = 1            # 超过最大步长
+    red_crash = 2           # 红色被摧毁
+    blue_crash = 3          # 蓝色被摧毁, 暂时视为对局结束
+    arrive_goal = 4         # 到达目标点
+    self_crash_angle = 5    # 意外结束, 判断为拐角过大
+    self_crash_coord = 6    # 意外结束, 判断为坐标偏离范围
+
+
 # 计算reward和done
 def get_reward_done(cur_state, next_state, red_crash, blue_crash):
-    reward, done = 0, False
-    # done的情况: 红方被击毁, 蓝方被击毁, 红方到达目标点, 红方坠机, 到达最长时间
+    reward, done = 0, Done.not_done.value
 
     # 根据目标点距离给予连续性小奖励
     goal_lat, goal_lon, goal_height = cur_state[11], cur_state[12], cur_state[13]
@@ -23,30 +34,40 @@ def get_reward_done(cur_state, next_state, red_crash, blue_crash):
     if cur_dist < 0.1:
         print("arrive goal!")
         reward += 5
-        done = True
+        done = Done.arrive_goal.value
 
     # 红方被击中, 给予一次性大惩罚
     if red_crash:
         print("red crash!")
         reward -= 5
-        done = True
+        done = Done.red_crash.value
 
     # 蓝方被击中, 给予一次性大奖励
     if blue_crash:
         print("blue crash!")
         reward += 5
+        done = Done.blue_crash.value
 
     # 坠机, 给予一次性大惩罚
+    delta_phi = abs(next_state[3] - cur_state[3])
+    if delta_phi > 180:
+        delta_phi = 360 - delta_phi
     delta_theta = abs(next_state[4] - cur_state[4])
     if delta_theta > 180:
         delta_theta = 360 - delta_theta
     delta_psi = abs(next_state[5] - cur_state[5])
     if delta_psi > 180:
         delta_psi = 360 - delta_psi
-    if delta_theta > 15 or delta_psi > 15:
-        print("crash down! ", delta_theta, delta_psi, next_state[4], cur_state[4], next_state[5], cur_state[5])
+    if delta_phi > 15 or delta_theta > 15 or delta_psi > 15:
+        print("crash down by angle! ", delta_phi, delta_theta, delta_psi, next_state[3], cur_state[3], next_state[4],
+              cur_state[4], next_state[5], cur_state[5])
         reward -= 5
-        done = True
+        done = Done.self_crash_angle.value
+    if next_state[0] < min_max[0][0] or next_state[0] > min_max[0][1] or next_state[1] < min_max[1][0] \
+            or next_state[1] > min_max[1][1] or next_state[2] < min_max[2][0] or next_state[2] > min_max[2][1]:
+        print("crash down by coord! ", next_state[0], next_state[1], next_state[2])
+        reward -= 5
+        done = Done.self_crash_coord.value
     return reward, done
 
 

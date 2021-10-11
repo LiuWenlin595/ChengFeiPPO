@@ -43,6 +43,7 @@ def train():
 
     time_step = 0
     i_episode = 0
+    done_type = [0] * 7  # TODO, 改成自动获得枚举个数的形式
 
     client = MyClient()
 
@@ -55,10 +56,10 @@ def train():
         # print(datetime.now().replace(microsecond=0) - start_time)
         connect_flag = False  # C++和py是否完成通信连接
         while not connect_flag:
-            env_proc = reset(env_proc)  # 双端测试时注释掉
+            # env_proc = reset(env_proc)  # 双端测试时注释掉
             client.send_reset()
             state, connect_flag = client.poll_reset()
-        # print("origin state: ", state)
+        print("origin state: ", state)
         current_ep_reward = 0
         # print(datetime.now().replace(microsecond=0) - start_time)
 
@@ -74,6 +75,7 @@ def train():
             action_send[0], action_send[1] = math.cos(angle), math.sin(angle)
             client.send_action(action_send)
             next_state, reward, done = client.recv_step(state)
+            # print(time_step, reward, current_ep_reward, done)
             """trick5, reward clipping"""
             # reward = np.clip(reward, -5, 5)
             current_ep_reward += reward
@@ -89,13 +91,16 @@ def train():
             if has_continuous_action_space and time_step % action_std_decay_freq == 0:
                 ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
 
+            if time_step % 50 == 0:
+                print(time_step, state)
+
             # log 记录 average reward
             if time_step % log_freq == 0:
 
                 log_avg_reward = log_running_reward / log_running_episodes
                 log_avg_reward = round(log_avg_reward, 4)
 
-                log_f.write('{},{},{}\n'.format(i_episode, time_step, log_avg_reward))
+                log_f.write('{},{},{},{},{}\n'.format(i_episode, time_step, log_avg_reward, log_running_reward, log_running_episodes))
                 log_f.flush()
 
                 log_running_reward = 0
@@ -121,8 +126,13 @@ def train():
                 print("Elapsed Time  : ", datetime.now().replace(microsecond=0) - start_time)
                 print("--------------------------------------------------------------------------------------------")
 
-            if done or t == max_ep_len - 1:  # 结束episode
+            if t == max_ep_len - 1:
+                done = Done.time_out.value
+            if done:  # 结束episode
                 ppo_agent.writer.add_scalar('reward', current_ep_reward, global_step=i_episode)
+                print("total: ", current_ep_reward, done)
+                done_type[done] += 1
+                print(done_type)
                 break
 
             state = next_state
@@ -134,6 +144,15 @@ def train():
         log_running_episodes += 1
 
         i_episode += 1
+        if i_episode % 100 == 0:
+            ppo_agent.writer.add_scalar('metrics/not_done', done_type[0], global_step=i_episode)
+            ppo_agent.writer.add_scalar('metrics/time_out', done_type[1], global_step=i_episode)
+            ppo_agent.writer.add_scalar('metrics/red_crash', done_type[2], global_step=i_episode)
+            ppo_agent.writer.add_scalar('metrics/blue_crash', done_type[3], global_step=i_episode)
+            ppo_agent.writer.add_scalar('metrics/arrive_goal', done_type[4], global_step=i_episode)
+            ppo_agent.writer.add_scalar('metrics/self_crash_angle', done_type[5], global_step=i_episode)
+            ppo_agent.writer.add_scalar('metrics/self_crash_coord', done_type[6], global_step=i_episode)
+            done_type = [0] * 7
 
     log_f.close()
 

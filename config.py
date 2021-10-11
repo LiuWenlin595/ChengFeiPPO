@@ -60,7 +60,7 @@ tensorboard_path = directory
 checkpoint_path = directory + "PPO_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
 """-------------------------训练超参数-------------------------"""
 update_timestep = max_ep_len * 3  # 每隔 update_timestep 执行一次 update policy
-k_epochs = 3  # 一个 update policy 中更新k轮
+k_epochs = 3  # 一个 update policy 中更新k轮, 相当于每个traj使用k_epochs遍
 
 eps_clip = 0.2  # clip参数
 gamma = 0.99  # 折扣因子
