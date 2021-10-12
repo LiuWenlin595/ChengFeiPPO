@@ -88,7 +88,7 @@ def train():
 
             # 对于连续动作, 隔段时间降低动作标准差, 保证策略收敛
             if has_continuous_action_space and time_step % action_std_decay_freq == 0:
-                ppo_agent.decay_action_std(action_std_decay_rate, min_action_std)
+                ppo_agent.decay_action_std()
 
             # log 记录 average reward
             if time_step % log_freq == 0:

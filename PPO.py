@@ -42,7 +42,7 @@ class PPO:
             print("WARNING : Calling PPO::set_action_std() on discrete action space policy")
             print("--------------------------------------------------------------------------------------------")
 
-    def decay_action_std(self, action_std_decay_rate, min_action_std):
+    def decay_action_std(self):
         print("--------------------------------------------------------------------------------------------")
         if has_continuous_action_space:
             self.action_std = self.action_std - action_std_decay_rate

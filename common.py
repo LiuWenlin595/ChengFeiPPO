@@ -33,19 +33,19 @@ def get_reward_done(cur_state, next_state, red_crash, blue_crash):
     # 到达目标点给予一次性大奖励, 如果直接朝目标点飞的话大概一次移动0.00027, 4000步可以走1.08没问题
     if cur_dist < 0.1:
         print("arrive goal!")
-        reward += 5
+        reward += 3
         done = Done.arrive_goal.value
 
     # 红方被击中, 给予一次性大惩罚
     if red_crash:
         print("red crash!")
-        reward -= 5
+        reward -= 3
         done = Done.red_crash.value
 
     # 蓝方被击中, 给予一次性大奖励
     if blue_crash:
         print("blue crash!")
-        reward += 5
+        reward += 3
         done = Done.blue_crash.value
 
     # 坠机, 给予一次性大惩罚
