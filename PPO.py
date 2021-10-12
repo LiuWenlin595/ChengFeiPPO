@@ -100,8 +100,7 @@ class PPO:
                 surr2 = torch.clamp(ratios, 1 - eps_clip, 1 + eps_clip) * advantages
                 actor_loss = -torch.min(surr1, surr2)
                 """trick1, value function clipping"""
-                # TODO value_clip的critic_loss也需要改成不求均值的形式, 同时考虑一下要不要改成SGD, 现在是ＭiniBatch
-
+                # TODO value_clip的critic_loss也需要改成不求均值的形式
                 if use_value_clip:
                     # 0.5就相当于epsilon, 是我瞎写的, 需要根据实际任务而定
                     _, old_state_values, _ = self.policy_old.evaluate(old_states, old_actions)
@@ -115,7 +114,7 @@ class PPO:
                 # 总的loss = actor loss + critic loss + entropy loss
                 loss = actor_loss + critic_coef * critic_loss - entropy_coef * entropy
                 if loss > 10000:
-                    print("high loss! ", actor_loss, critic_loss, entropy, state_values, returns[i], advantages, surr1, surr2)
+                    print("high loss! ", i, actor_loss, critic_loss, entropy, state_values, returns[i], advantages, surr1, surr2)
                 self.writer.add_scalar('Loss/critic_loss', critic_loss, global_step=self.update_iteration)
                 self.writer.add_scalar('Loss/actor_loss', actor_loss, global_step=self.update_iteration)
                 self.writer.add_scalar('Loss/entropy', entropy, global_step=self.update_iteration)

@@ -79,6 +79,9 @@ def train():
             # reward = np.clip(reward, -5, 5)
             current_ep_reward += reward
 
+            if t == max_ep_len - 1:
+                done = Done.time_out.value
+
             # buffer存一帧数据
             ppo_agent.buffer.append(action, logprob, state, next_state, state_value, reward, done)
 
@@ -122,8 +125,6 @@ def train():
                 print("Elapsed Time  : ", datetime.now().replace(microsecond=0) - start_time)
                 print("--------------------------------------------------------------------------------------------")
 
-            if t == max_ep_len - 1:
-                done = Done.time_out.value
             if done:  # 结束episode
                 ppo_agent.writer.add_scalar('reward', current_ep_reward, global_step=i_episode)
                 done_type[done] += 1
