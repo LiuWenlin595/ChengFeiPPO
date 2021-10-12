@@ -33,8 +33,8 @@ action_std_decay_rate = 0.05  # 标准差的线性衰减步长 (action_std = act
 min_action_std = 0.1  # 最小动作标准差, 当 action_std <= min_action_std 时停止衰减
 action_std_decay_freq = int(1e6)  # 每隔 action_std_decay_freq 衰减一次
 
-lr_actor = 0.0003  # actor学习率
-lr_critic = 0.001  # critic学习率
+lr_actor = 3e-6  # actor学习率
+lr_critic = 5e-6  # critic学习率
 use_orth = False  # 是否使用正交初始化参数
 use_linear_lr_decay = False  # 是否使用学习率衰减
 
@@ -60,7 +60,7 @@ tensorboard_path = directory
 checkpoint_path = directory + "PPO_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
 """-------------------------训练超参数-------------------------"""
 update_timestep = max_ep_len * 3  # 每隔 update_timestep 执行一次 update policy
-k_epochs = 3  # 一个 update policy 中更新k轮, 相当于每个traj使用k_epochs遍
+k_epochs = 2  # 一个 update policy 中更新k轮, 相当于每个traj使用k_epochs遍
 
 eps_clip = 0.2  # clip参数
 gamma = 0.99  # 折扣因子

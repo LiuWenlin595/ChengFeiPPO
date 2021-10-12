@@ -114,6 +114,8 @@ class PPO:
                 # TODO entropy没有grad是不是有问题
                 # 总的loss = actor loss + critic loss + entropy loss
                 loss = actor_loss + critic_coef * critic_loss - entropy_coef * entropy
+                if loss > 10000:
+                    print("high loss! ", actor_loss, critic_loss, entropy, state_values, returns[i], advantages, surr1, surr2)
                 self.writer.add_scalar('Loss/critic_loss', critic_loss, global_step=self.update_iteration)
                 self.writer.add_scalar('Loss/actor_loss', actor_loss, global_step=self.update_iteration)
                 self.writer.add_scalar('Loss/entropy', entropy, global_step=self.update_iteration)

@@ -49,25 +49,25 @@ def get_reward_done(cur_state, next_state, red_crash, blue_crash):
         done = Done.blue_crash.value
 
     # 坠机, 给予一次性大惩罚
-    delta_phi = abs(next_state[3] - cur_state[3])
-    if delta_phi > 180:
-        delta_phi = 360 - delta_phi
-    delta_theta = abs(next_state[4] - cur_state[4])
-    if delta_theta > 180:
-        delta_theta = 360 - delta_theta
-    delta_psi = abs(next_state[5] - cur_state[5])
-    if delta_psi > 180:
-        delta_psi = 360 - delta_psi
-    if delta_phi > 15 or delta_theta > 15 or delta_psi > 15:
-        print("crash down by angle! ", delta_phi, delta_theta, delta_psi, next_state[3], cur_state[3], next_state[4],
-              cur_state[4], next_state[5], cur_state[5])
-        reward -= 5
-        done = Done.self_crash_angle.value
-    if next_state[0] < min_max[0][0] or next_state[0] > min_max[0][1] or next_state[1] < min_max[1][0] \
-            or next_state[1] > min_max[1][1] or next_state[2] < min_max[2][0] or next_state[2] > min_max[2][1]:
-        print("crash down by coord! ", next_state[0], next_state[1], next_state[2])
-        reward -= 5
-        done = Done.self_crash_coord.value
+    # delta_phi = abs(next_state[3] - cur_state[3])
+    # if delta_phi > 180:
+    #     delta_phi = 360 - delta_phi
+    # delta_theta = abs(next_state[4] - cur_state[4])
+    # if delta_theta > 180:
+    #     delta_theta = 360 - delta_theta
+    # delta_psi = abs(next_state[5] - cur_state[5])
+    # if delta_psi > 180:
+    #     delta_psi = 360 - delta_psi
+    # if delta_phi > 15 or delta_theta > 15 or delta_psi > 15:
+    #     print("crash down by angle! ", delta_phi, delta_theta, delta_psi, next_state[3], cur_state[3], next_state[4],
+    #           cur_state[4], next_state[5], cur_state[5])
+    #     reward -= 5
+    #     done = Done.self_crash_angle.value
+    # if next_state[0] < min_max[0][0] or next_state[0] > min_max[0][1] or next_state[1] < min_max[1][0] \
+    #         or next_state[1] > min_max[1][1] or next_state[2] < min_max[2][0] or next_state[2] > min_max[2][1]:
+    #     print("crash down by coord! ", next_state[0], next_state[1], next_state[2])
+    #     reward -= 5
+    #     done = Done.self_crash_coord.value
     return reward, done
 
 
