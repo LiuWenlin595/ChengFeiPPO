@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import random
 from multiprocessing import Process
 import subprocess
 from enum import Enum
@@ -26,7 +27,7 @@ def get_reward_done(cur_state, next_state, red_crash, blue_crash):
     goal_lat, goal_lon, goal_height = cur_state[11], cur_state[12], cur_state[13]
     cur_dist = math.sqrt(pow(cur_state[0] - goal_lat, 2) + pow(cur_state[1] - goal_lon, 2))
     next_dist = math.sqrt(pow(next_state[0] - goal_lat, 2) + pow(next_state[1] - goal_lon, 2))
-    reward += (cur_dist - next_dist) * 1000  # 乘以一个数量级, 防止dist过小
+    reward += (math.exp(-next_dist) - math.exp(-cur_dist)) * 1000 # 采用y=e^(-x)作为距离的递减函数, 相比于线性函数可以更好的体现目标远近
 
     # TODO 根据导弹的范围来设计奖励, 但是导弹并不是全局信息, 所以需要考虑疏忽的情况
 
@@ -80,6 +81,14 @@ def normalize_state(state):
             continue
         norm_state[i] = (state[i] - min_max[i][0]) / (min_max[i][1] - min_max[i][0])
     return norm_state
+
+
+# 打乱用于训练的数据
+def shuffle(returns, actions, logprobs, states):
+    shuffle_data = list(zip(returns, actions, logprobs, states))
+    random.shuffle(shuffle_data)
+    new_returns, new_actions, new_logprobs, new_states = zip(*shuffle_data)
+    return new_returns, new_actions, new_logprobs, new_states
 
 
 # 打印所有超参数

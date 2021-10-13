@@ -60,15 +60,15 @@ tensorboard_path = directory
 checkpoint_path = directory + "PPO_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
 """-------------------------训练超参数-------------------------"""
 update_timestep = max_ep_len * 4  # 每隔 update_timestep 执行一次 update policy
-k_epochs = 2  # 一个 update policy 中更新k轮, 相当于每个traj使用k_epochs遍
+k_epochs = 1  # 一个 update policy 中更新k轮, 相当于每个traj使用k_epochs遍
 
 eps_clip = 0.2  # clip参数
 gamma = 0.95  # 折扣因子
 
 use_gae = True  # 是否使用GAE
 gae_lambda = 0.95  # gae的权重参数
-mini_batch = 2000  # 单批数据的处理量
-batch_size = 3000  # mempool的容量
+mini_batch = 4000  # 单批数据的处理量
+batch_size = 6000  # mempool的容量
 """-------------------------测试超参数-------------------------"""
 render = True  # 是否render
 frame_delay = 0  # 是否每一帧停顿一些时间, 可以render的更清楚

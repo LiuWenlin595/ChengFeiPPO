@@ -21,7 +21,7 @@ def train():
     if load_flag and os.path.exists(checkpoint_path):
         print("--------------------------------------------------------------------------------------------")
         print("loading model at : " + checkpoint_path)
-        ppo_agent.load(checkpoint_path)
+        ppo_agent.load()
         print("model loaded")
         print("--------------------------------------------------------------------------------------------")
 
@@ -74,7 +74,6 @@ def train():
             action_send[0], action_send[1] = math.cos(angle), math.sin(angle)
             client.send_action(action_send)
             next_state, reward, done = client.recv_step(state)
-            # print(time_step, reward, current_ep_reward, done)
             """trick5, reward clipping"""
             # reward = np.clip(reward, -5, 5)
             current_ep_reward += reward
@@ -120,7 +119,7 @@ def train():
             if time_step % save_model_freq == 0:
                 print("--------------------------------------------------------------------------------------------")
                 print("saving model at : " + checkpoint_path)
-                ppo_agent.save(checkpoint_path)
+                ppo_agent.save()
                 print("model saved")
                 print("Elapsed Time  : ", datetime.now().replace(microsecond=0) - start_time)
                 print("--------------------------------------------------------------------------------------------")

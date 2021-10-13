@@ -4,6 +4,7 @@ from tensorboardX import SummaryWriter
 from network import ActorCritic
 from rollout import RolloutBuffer
 from config import *
+from common import *
 
 
 class PPO:
@@ -15,7 +16,7 @@ class PPO:
         self.buffer = RolloutBuffer()
 
         # 需要用到两个网络, 因为策略比
-        self.policy = ActorCritic(state_dim, action_dim).to(device)
+        self.policy = ActorCritic().to(device)
         self.optimizer = torch.optim.Adam([{
             'params': self.policy.actor.parameters(),
             'lr': lr_actor
@@ -24,7 +25,7 @@ class PPO:
             'lr': lr_critic
         }])
 
-        self.policy_old = ActorCritic(state_dim, action_dim).to(device)
+        self.policy_old = ActorCritic().to(device)
         self.policy_old.load_state_dict(self.policy.state_dict())  # 复制网络
         self.MSEloss = nn.MSELoss()
 
@@ -119,6 +120,7 @@ class PPO:
                 self.writer.add_scalar('Loss/actor_loss', actor_loss, global_step=self.update_iteration)
                 self.writer.add_scalar('Loss/entropy', entropy, global_step=self.update_iteration)
                 self.writer.add_scalar('Loss/total_loss', loss, global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/advantage', advantages, global_step=self.update_iteration)
 
                 # 梯度更新
                 self.optimizer.zero_grad()
@@ -209,7 +211,7 @@ class PPO:
                 delta = rewards[t] + gamma * states_value[t + 1] - states_value[t]
             gae += gamma * gae_lambda * delta
             returns.insert(0, gae + states_value[t])
-        return returns, actions, logprobs, states
+        return shuffle(returns, actions, logprobs, states)
 
     # 计算MiniBatch的LambdaReturn, return = reward + gamma * return_next
     def calc_lambda_return(self):
@@ -221,13 +223,13 @@ class PPO:
                 lambda_return = 0
             lambda_return = rewards[t] + gamma * lambda_return
             returns.insert(0, lambda_return)
-        return returns, actions, logprobs, states
+        return shuffle(returns, actions, logprobs, states)
 
     # 保存模型
-    def save(self, checkpoint_path):
+    def save(self):
         torch.save(self.policy_old.state_dict(), checkpoint_path)
 
     # 加载模型
-    def load(self, checkpoint_path):
+    def load(self):
         self.policy_old.load_state_dict(torch.load(checkpoint_path, map_location=lambda storage, loc: storage))
         self.policy.load_state_dict(torch.load(checkpoint_path, map_location=lambda storage, loc: storage))

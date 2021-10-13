@@ -14,7 +14,7 @@ def init(module, weight_init, bias_init, gain=1):
 
 
 class ActorCritic(nn.Module):
-    def __init__(self, state_dim, action_dim):
+    def __init__(self):
         super(ActorCritic, self).__init__()
 
         self.has_continuous_action_space = has_continuous_action_space
