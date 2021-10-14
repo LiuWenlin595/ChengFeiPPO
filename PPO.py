@@ -86,17 +86,17 @@ class PPO:
 
         # 进行k轮update policy
         for _ in range(k_epochs):
-            for i in range(mini_batch):
-                logprobs, state_values, entropy = self.policy.evaluate(old_states[i], old_actions[i])
+            for i in range(0, batch_size, mini_batch):
+                logprobs, state_values, entropy = self.policy.evaluate(old_states[i:i+mini_batch], old_actions[i:i+mini_batch])
 
                 # 处理state_values的张量维度和reward相同
                 state_values = torch.squeeze(state_values)
 
                 # 计算策略比
-                ratios = torch.exp(logprobs - old_logprobs[i].detach())
+                ratios = torch.exp(logprobs - old_logprobs[i:i+mini_batch].detach())
 
                 # 计算PPO的约束loss
-                advantages = returns[i] - state_values.detach()
+                advantages = returns[i:i+mini_batch] - state_values.detach()
                 surr1 = ratios * advantages
                 surr2 = torch.clamp(ratios, 1 - eps_clip, 1 + eps_clip) * advantages
                 actor_loss = -torch.min(surr1, surr2)
@@ -109,22 +109,23 @@ class PPO:
                     value_clip = old_state_values + torch.clamp(state_values - old_state_values, -0.5, 0.5)
                     critic_loss = torch.min(self.MSEloss(state_values, returns), self.MSEloss(value_clip, returns))
                 else:
-                    critic_loss = (state_values - returns[i]).pow(2)
+                    critic_loss = (state_values - returns[i:i+mini_batch]).pow(2)
 
                 # TODO entropy没有grad是不是有问题
                 # 总的loss = actor loss + critic loss + entropy loss
                 loss = actor_loss + critic_coef * critic_loss - entropy_coef * entropy
-                if loss > 10000:
-                    print("high loss! ", i, actor_loss, critic_loss, entropy, state_values, returns[i], advantages, surr1, surr2)
-                self.writer.add_scalar('Loss/critic_loss', critic_loss, global_step=self.update_iteration)
-                self.writer.add_scalar('Loss/actor_loss', actor_loss, global_step=self.update_iteration)
-                self.writer.add_scalar('Loss/entropy', entropy, global_step=self.update_iteration)
-                self.writer.add_scalar('Loss/total_loss', loss, global_step=self.update_iteration)
-                self.writer.add_scalar('Loss/advantage', advantages, global_step=self.update_iteration)
+                # if loss > 10000:
+                #     print("high loss! ", i, actor_loss, critic_loss, entropy,
+                #     state_values, returns[i:i+mini_batch], advantages, surr1, surr2)
+                self.writer.add_scalar('Loss/critic_loss', critic_loss.mean(), global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/actor_loss', actor_loss.mean(), global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/entropy', entropy.mean(), global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/total_loss', loss.mean(), global_step=self.update_iteration)
+                self.writer.add_scalar('Loss/advantage', advantages.mean(), global_step=self.update_iteration)
 
                 # 梯度更新
                 self.optimizer.zero_grad()
-                loss.backward()
+                loss.mean().backward()
                 """trick9, global gradient clipping"""
                 # max_grad_norm的值也是我瞎写的
                 # nn.utils.clip_grad_norm_(self.policy.parameters(), max_grad_norm)
@@ -202,8 +203,8 @@ class PPO:
     def calc_gae_return(self):
         actions, logprobs, states, next_states, states_value, rewards, is_done = self.buffer.sample()
         returns = []
-        for t in range(self.buffer.mini_batch - 1, -1, -1):
-            if is_done[t] or t == self.buffer.mini_batch - 1:  # episode最后一帧或者batch最后一帧
+        for t in range(self.buffer.batch_size - 1, -1, -1):
+            if is_done[t] or t == self.buffer.batch_size - 1:  # episode最后一帧或者batch最后一帧
                 gae = 0
                 next_value = self.policy.critic(torch.FloatTensor(next_states[t]).to(device))
                 delta = rewards[t] + gamma * next_value - states_value[t]
@@ -217,7 +218,7 @@ class PPO:
     def calc_lambda_return(self):
         actions, logprobs, states, next_states, states_value, rewards, is_done = self.buffer.sample()
         returns = []
-        for t in range(self.buffer.mini_batch - 1, -1, -1):
+        for t in range(self.buffer.batch_size - 1, -1, -1):
             lambda_return = 0
             if is_done[t]:  # 遇到done的时候重新计算
                 lambda_return = 0

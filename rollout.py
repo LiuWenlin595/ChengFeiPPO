@@ -3,8 +3,8 @@ from config import *
 
 class RolloutBuffer:
     def __init__(self):
-        self.mini_batch = mini_batch  # 每次训练取出的数据量
-        self.batch_size = batch_size  # PPO buffer总的数据存储大小
+        self.batch_size = batch_size  # 每次训练取出的数据量
+        self.buffer_size = buffer_size  # PPO buffer总的数据存储大小
         self.cur_size = 0  # 当前buffer里的数据量
 
         self.actions = []  # 当前帧动作
@@ -17,7 +17,7 @@ class RolloutBuffer:
 
     # 朝buffer里添加新数据
     def append(self, action, logprob, state, next_state, state_value, reward, done):
-        if self.cur_size < self.batch_size:
+        if self.cur_size < self.buffer_size:
             self.actions.append(torch.Tensor([action]).to(device))
             self.logprobs.append(logprob)
             self.states.append(torch.FloatTensor(state).to(device))
@@ -37,17 +37,17 @@ class RolloutBuffer:
 
     # 取出MiniBatch的数据并删除
     def sample(self):
-        if self.cur_size < self.mini_batch:
-            print("data is not enough,", self.cur_size, self.mini_batch)
+        if self.cur_size < self.batch_size:
+            print("data is not enough,", self.cur_size, self.batch_size)
             return
         # 取出数据
-        actions = self.actions[:self.mini_batch]
-        logprobs = self.logprobs[:self.mini_batch]
-        states = self.states[:self.mini_batch]
-        next_states = self.next_states[:self.mini_batch]
-        states_value = self.states_value[:self.mini_batch]
-        rewards = self.rewards[:self.mini_batch]
-        is_done = self.is_done[:self.mini_batch]
+        actions = self.actions[:self.batch_size]
+        logprobs = self.logprobs[:self.batch_size]
+        states = self.states[:self.batch_size]
+        next_states = self.next_states[:self.batch_size]
+        states_value = self.states_value[:self.batch_size]
+        rewards = self.rewards[:self.batch_size]
+        is_done = self.is_done[:self.batch_size]
         # # 删除数据
         # self.actions = self.actions[self.mini_batch:]
         # self.logprobs = self.logprobs[self.mini_batch:]
@@ -61,7 +61,7 @@ class RolloutBuffer:
 
     # 判断buffer是否满
     def is_full(self):
-        return self.cur_size == self.batch_size
+        return self.cur_size == self.buffer_size
 
     # 清空buffer
     def clear(self):

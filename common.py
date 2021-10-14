@@ -26,15 +26,15 @@ def get_reward_done(cur_state, next_state, red_crash, blue_crash):
     # 根据目标点距离给予连续性小奖励
     goal_lat, goal_lon, goal_height = cur_state[11], cur_state[12], cur_state[13]
     cur_dist = math.sqrt(pow(cur_state[0] - goal_lat, 2) + pow(cur_state[1] - goal_lon, 2))
-    next_dist = math.sqrt(pow(next_state[0] - goal_lat, 2) + pow(next_state[1] - goal_lon, 2))
-    reward += (math.exp(-next_dist) - math.exp(-cur_dist)) * 1000 # 采用y=e^(-x)作为距离的递减函数, 相比于线性函数可以更好的体现目标远近
+    # next_dist = math.sqrt(pow(next_state[0] - goal_lat, 2) + pow(next_state[1] - goal_lon, 2))
+    # reward += (math.exp(-next_dist) - math.exp(-cur_dist)) * 1000 # 采用y=e^(-x)作为距离的递减函数, 相比于线性函数可以更好的体现目标远近
 
     # TODO 根据导弹的范围来设计奖励, 但是导弹并不是全局信息, 所以需要考虑疏忽的情况
 
     # 到达目标点给予一次性大奖励, 如果直接朝目标点飞的话大概一次移动0.00027, 4000步可以走1.08没问题
     if cur_dist < 0.1:
         print("arrive goal!")
-        reward += 3
+        reward += 5
         done = Done.arrive_goal.value
 
     # 红方被击中, 给予一次性大惩罚
