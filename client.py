@@ -89,9 +89,9 @@ class MyClient:
         17  敌人翻滚角 
         18  敌人俯仰角
         19  敌人偏航角
-        20  敌人南北速度
+        20  敌人南北速度 
         21  敌人东西速度
-        22  敌人上下速度
+        22  敌人上下速度 
         23  导弹距离
         24  导弹方向
         '''
@@ -121,6 +121,12 @@ class MyClient:
         state[0][22] = msg_env.enemy.vel.vel_down if msg_env.detect_enemy else -1
         state[0][23] = msg_env.missle.dist if msg_env.detect_missle else -1
         state[0][24] = msg_env.missle.dir if msg_env.detect_missle else -1
+
+        if msg_env.detect_enemy:
+            print("detect enemy")
+            print(msg_env.enemy.dof.lat, msg_env.enemy.dof.lon, msg_env.enemy.dof.height, msg_env.enemy.dof.phi,
+                  msg_env.enemy.dof.theta, msg_env.enemy.dof.psi, msg_env.enemy.vel.vel_north, msg_env.enemy.vel.vel_east,
+                  msg_env.enemy.vel.vel_down)
 
         next_state = state[0]
         if cur_state is None:

@@ -31,14 +31,14 @@ class ActorCritic(nn.Module):
 
         # actor
         if has_continuous_action_space:
-            self.actor = nn.Sequential(init_(nn.Linear(state_dim, 256)), nn.Tanh(), init_(nn.Linear(256, 256)), nn.Tanh(), init_(nn.Linear(256, action_dim)),
+            self.actor = nn.Sequential(init_(nn.Linear(state_dim, 64)), nn.Tanh(), init_(nn.Linear(64, 64)), nn.Tanh(), init_(nn.Linear(64, action_dim)),
                                        nn.Tanh())
         else:
-            self.actor = nn.Sequential(init_(nn.Linear(state_dim, 256)), nn.Tanh(), init_(nn.Linear(256, 256)), nn.Tanh(), init_(nn.Linear(256, action_dim)),
+            self.actor = nn.Sequential(init_(nn.Linear(state_dim, 64)), nn.Tanh(), init_(nn.Linear(64, 64)), nn.Tanh(), init_(nn.Linear(64, action_dim)),
                                        nn.Softmax(dim=-1))
 
         # critic
-        self.critic = nn.Sequential(init_(nn.Linear(state_dim, 256)), nn.Tanh(), init_(nn.Linear(256, 256)), nn.Tanh(), init_(nn.Linear(256, 1)))
+        self.critic = nn.Sequential(init_(nn.Linear(state_dim, 64)), nn.Tanh(), init_(nn.Linear(64, 64)), nn.Tanh(), init_(nn.Linear(64, 1)))
 
     def set_action_std(self, new_action_std):
         """设置方差"""

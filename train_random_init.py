@@ -45,6 +45,10 @@ def train():
     i_episode = 0
     done_type = [0] * 7  # TODO, 改成自动获得枚举个数的形式
 
+    illegal_count = [0] * state_dim
+    illegal_count_episode = [0] * state_dim
+    detect_enemy = 0
+
     client = MyClient()
 
     # 开始训练
@@ -53,32 +57,54 @@ def train():
         if use_linear_lr_decay:
             update_linear_schedule(ppo_agent.optimizer, time_step, max_training_timesteps)
 
-        # print(datetime.now().replace(microsecond=0) - start_time)
+        print("episode: ", i_episode)
+        print("start time: ", datetime.now().replace(microsecond=0))
         connect_flag = False  # C++和py是否完成通信连接
         while not connect_flag:
             env_proc = reset(env_proc)  # 双端测试时注释掉
             client.send_reset()
             state, connect_flag = client.poll_reset()
         current_ep_reward = 0
-        # print(datetime.now().replace(microsecond=0) - start_time)
+        print("connect time: ", datetime.now().replace(microsecond=0))
 
+        illegal_episode_flag = [False] * state_dim
+        detect_enemy_flag = False
         for t in range(max_ep_len):
             time_step += 1
             # 环境交互
             action_send = np.zeros(3)
             action_send[2] = state[2]
             norm_state = normalize_state(state)
+            for i in range(state_dim):
+                if i < 14 and (norm_state[i] > 1 or norm_state[i] < 0):
+                    print("illegal: ", i, norm_state[i], state[i])
+                    illegal_count[i] += 1
+                    if not illegal_episode_flag[i]:
+                        illegal_count_episode[i] += 1
+                        illegal_episode_flag[i] = True
+                if i >= 14 and norm_state[i] != -1 and (norm_state[i] > 1 or norm_state[i] < 0):
+                    print("illegal: ", i, norm_state[i], state[i])
+                    illegal_count[i] += 1
+                    if not illegal_episode_flag[i]:
+                        illegal_count_episode[i] += 1
+                        illegal_episode_flag[i] = True
+                if i >= 14 and norm_state[i] != -1:
+                    if not detect_enemy_flag:
+                        detect_enemy += 1
+                        detect_enemy_flag = True
 
             action, logprob, state_value = ppo_agent.select_action(norm_state)
             angle = ((state[5] + action[0] * 30) % 360) / 180.0 * math.pi
             action_send[0], action_send[1] = math.cos(angle), math.sin(angle)
             client.send_action(action_send)
+            print(t, state[:9], angle, action[0])
             next_state, reward, done = client.recv_step(state)
+            print("end recv, ", t)
             """trick5, reward clipping"""
             # reward = np.clip(reward, -5, 5)
             current_ep_reward += reward
 
-            if t == max_ep_len - 1:
+            if not done and t == max_ep_len - 1:
                 done = Done.time_out.value
 
             # buffer存一帧数据
@@ -86,7 +112,9 @@ def train():
 
             # 更新PPO
             if ppo_agent.buffer.is_full() and time_step % update_timestep == 0:
+                print("start train time: ", datetime.now().replace(microsecond=0))
                 ppo_agent.update_sgd()
+                print("end train time: ", datetime.now().replace(microsecond=0))
 
             # 对于连续动作, 隔段时间降低动作标准差, 保证策略收敛
             if has_continuous_action_space and time_step % action_std_decay_freq == 0:
@@ -126,6 +154,8 @@ def train():
 
             if done:  # 结束episode
                 ppo_agent.writer.add_scalar('reward', current_ep_reward, global_step=i_episode)
+                ppo_agent.writer.add_scalar('metrics/episode_length', t+1, global_step=i_episode)
+                ppo_agent.writer.add_scalar('metrics/time_steps', time_step, global_step=i_episode)
                 done_type[done] += 1
                 break
 
@@ -146,6 +176,8 @@ def train():
             ppo_agent.writer.add_scalar('metrics/arrive_goal', done_type[4], global_step=i_episode)
             ppo_agent.writer.add_scalar('metrics/self_crash_angle', done_type[5], global_step=i_episode)
             ppo_agent.writer.add_scalar('metrics/self_crash_coord', done_type[6], global_step=i_episode)
+            print("illegal_count: ", illegal_count)
+            print("illegal_count_episode: ", illegal_count_episode)
             done_type = [0] * 7
 
     log_f.close()

@@ -23,6 +23,9 @@ class Done(Enum):
 def get_reward_done(cur_state, next_state, red_crash, blue_crash):
     reward, done = 0, Done.not_done.value
 
+    # 时间步小惩罚, 可以督促agent快点完成任务
+    # reward -= 0.005  # 0.005x1000=5
+
     # 根据目标点距离给予连续性小奖励
     goal_lat, goal_lon, goal_height = cur_state[11], cur_state[12], cur_state[13]
     cur_dist = math.sqrt(pow(cur_state[0] - goal_lat, 2) + pow(cur_state[1] - goal_lon, 2))
@@ -31,20 +34,20 @@ def get_reward_done(cur_state, next_state, red_crash, blue_crash):
 
     # TODO 根据导弹的范围来设计奖励, 但是导弹并不是全局信息, 所以需要考虑疏忽的情况
 
-    # 到达目标点给予一次性大奖励, 如果直接朝目标点飞的话大概一次移动0.00027, 4000步可以走1.08没问题
-    if cur_dist < 0.1:
-        print("arrive goal!")
-        reward += 5
-        done = Done.arrive_goal.value
-
-    # 红方被击中, 给予一次性大惩罚
-    if red_crash:
+    if red_crash:   # 红方被击中, 给予一次性大惩罚
         print("red crash!")
         reward -= 3
         done = Done.red_crash.value
-
-    # 蓝方被击中, 给予一次性大奖励
-    if blue_crash:
+    elif next_state[0] < min_max[0][0] or next_state[0] > min_max[0][1] or next_state[1] < min_max[1][0] or \
+            next_state[1] > min_max[1][1] or next_state[2] < min_max[2][0] or next_state[2] > min_max[2][1]:
+        print("crash coord! ", next_state[:3])
+        reward -= 20
+        done = Done.self_crash_coord.value
+    elif cur_dist < 0.1:    # 到达目标点给予一次性大奖励
+        print("arrive goal!")
+        reward += 50
+        done = Done.arrive_goal.value
+    elif blue_crash:    # 蓝方被击中, 给予一次性大奖励
         print("blue crash!")
         reward += 3
         done = Done.blue_crash.value

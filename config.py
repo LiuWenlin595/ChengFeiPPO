@@ -10,17 +10,17 @@ env_name = "1v1"
 env_path = "D:\\Project\\skln_working\\dev_asnb_1v1_r4.bat"
 state_dim = 25  # 状态空间维度
 min_max = [[-1] * 2 for _ in range(state_dim)]  # 用来存所有state的min值和max值
-min_max[0] = min_max[11] = min_max[14] = [36.5, 37.5]
-min_max[1] = min_max[12] = min_max[15] = [-122, -121]
+min_max[0] = min_max[11] = min_max[14] = [36, 38]
+min_max[1] = min_max[12] = min_max[15] = [-122.5, -120.5]
 min_max[2] = min_max[13] = min_max[16] = [5000, 6000]
 min_max[3] = min_max[4] = min_max[5] = min_max[17] = min_max[18] = min_max[19] = [0, 360]
-min_max[6] = min_max[7] = min_max[8] = min_max[20] = min_max[21] = min_max[22] = min_max[24] = [0, 250]
+min_max[6] = min_max[7] = min_max[8] = min_max[20] = min_max[21] = min_max[22] = min_max[24] = [-250, 250]
 min_max[9] = min_max[10] = [0, 1]
 min_max[23] = [0, 5000]
 action_dim = 1  # 动作空间维度
 has_continuous_action_space = True  # 连续动作为True否则False
 
-max_ep_len = 4000  # 一个episode的最多timesteps
+max_ep_len = 8000  # 一个episode的最多timesteps
 max_training_timesteps = int(3e7)  # 当 timesteps > max_training_timesteps 时停止循环
 
 print_freq = max_ep_len * 10  # 每隔多少个step打印一次 average reward
@@ -33,8 +33,8 @@ action_std_decay_rate = 0.05  # 标准差的线性衰减步长 (action_std = act
 min_action_std = 0.1  # 最小动作标准差, 当 action_std <= min_action_std 时停止衰减
 action_std_decay_freq = int(1e5)  # 每隔 action_std_decay_freq 衰减一次
 
-lr_actor = 3e-7  # actor学习率
-lr_critic = 5e-7  # critic学习率
+lr_actor = 3e-6  # actor学习率
+lr_critic = 5e-6  # critic学习率
 use_orth = False  # 是否使用正交初始化参数
 use_linear_lr_decay = False  # 是否使用学习率衰减
 
@@ -59,7 +59,7 @@ if not os.path.exists(directory):
 tensorboard_path = directory
 checkpoint_path = directory + "PPO_{}_{}_{}.pth".format(env_name, random_seed, run_num_pretrained)
 """-------------------------训练超参数-------------------------"""
-update_timestep = max_ep_len * 3  # 每隔 update_timestep 执行一次 update policy
+update_timestep = max_ep_len * 10  # 每隔 update_timestep 执行一次 update policy
 k_epochs = 1  # 一个 update policy 中更新k轮, 相当于每个traj使用k_epochs遍
 
 eps_clip = 0.2  # clip参数
@@ -68,8 +68,8 @@ gamma = 0.98  # 折扣因子
 use_gae = True  # 是否使用GAE
 gae_lambda = 0.95  # gae的权重参数
 mini_batch = 100    # 多少条数据进行一次梯度更新
-batch_size = 12000  # 执行一次更新函数需要的数据量
-buffer_size = 20000  # mempool的容量
+batch_size = 80000  # 执行一次更新函数需要的数据量
+buffer_size = 100000  # mempool的容量
 """-------------------------测试超参数-------------------------"""
 render = True  # 是否render
 frame_delay = 0  # 是否每一帧停顿一些时间, 可以render的更清楚
